@@ -1,18 +1,21 @@
 require_relative 'config/environment.rb'
 
+##This file is used for filling Pokemon table
 
-count = JSON.parse(RestClient.get("https://pokeapi.co/api/v2/pokemon"))["count"]
-name = JSON.parse(RestClient.get("https://pokeapi.co/api/v2/pokemon/#{1}"))["name"]
-type = JSON.parse(RestClient.get("https://pokeapi.co/api/v2/pokemon/#{1}"))["types"]
-xp = JSON.parse(RestClient.get("https://pokeapi.co/api/v2/pokemon/#{1}"))["base_experience"]
-level = 1
-#151.times do |i|
-    data = JSON.parse(RestClient.get("https://pokeapi.co/api/v2/pokemon#{1}"))
-    Pokemon.create
-#end
+150.times do |i|
+    data = JSON.parse(RestClient.get("https://pokeapi.co/api/v2/pokemon/#{i+1}"))
+    count = data["count"]
+    newPokemon = Pokemon.create(name:data["name"],xp:data["base_experience"],level:1)
+     types = data["types"]
+    types.length.times do |x|
+        newType = types[x]["type"]["name"]
+        myType = PokemonType.find_by(name:"#{newType}")
+        if(myType)
+            newPokemon.pokemon_types<<myType
+        else
+            newPokemon.pokemon_types<<PokemonType.create(name:"#{newType}")
+        end
+    end
+end
 
 
-puts count
-puts name
-puts type.length
-puts xp
