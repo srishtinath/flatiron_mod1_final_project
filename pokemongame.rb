@@ -5,35 +5,37 @@ require_all 'app/models'
 
 prompt = TTY::Prompt.new
 
-# Create Trainer
-    #Create a new Trainer instance with prompts for name, age, hometown
-
 prompt.say("Welcome to Pokemon World!!!")
-<<<<<<< HEAD
 prompt.keypress("Press enter to continue", keys: [:return])
 
-
+# Create Trainer
+#Create a new Trainer instance with prompts for name, age, hometown
 acct_creation = prompt.yes?('Would you like to create your trainer?')
 
 if acct_creation
-    name = prompt.ask('What is your name?')
-    age = prompt.ask('How old are you?')
-    hometown = prompt.ask('Where are you from?')
+    name = prompt.ask('What is your name?', required: true)
+    age = prompt.ask('How old are you?', required: true)
+    hometown = prompt.ask('Where are you from?', required: true)
 
-    Trainer.create(name: name, age: age, hometown: hometown)
+    #Trainer.create(name: name, age: age, hometown: hometown)
 end
-=======
-name = prompt.ask('What is your name?', default: ENV['USER'])
 
 
 
 # Choose Starter Pokemon
     #create new instance based on choice offered (Bulbasaur, Charmander, Squirtle, Pikachu)
 
+pokemon = prompt.select("Select your starter pokemon:", ["Pikachu", "Charmander", "Squirtle", "Bulbasaur"])
+
+
 # Now, what would you like to do?
     #Explore the town
     #Catch pokemon
     #View all pokemon
+
+action = prompt.select("What would you like to do?", ["Explore Town", "Catch Pokemon", "View My Pokemons"])
+
+
 
 #Explore
     #Professor Oak's Clinic
@@ -44,6 +46,27 @@ name = prompt.ask('What is your name?', default: ENV['USER'])
         #learn about how game works
     #Pokemon Center
     #Police station
+    
+location = prompt.select("Where would you like to go?", ["Professor Oak's Clinic", "Misty's Gym", "Brock's House", "Pokemon Center", "Police Station", "Go Back"])
+
+case location
+when "Brock's House"
+    puts "Brock man"
+when "Professor Oak's Clinic"
+    puts "Oaky"
+when "Pokemon Center"
+    puts "Center"
+when "Police Station"
+    puts "Policia"
+when "Misty's Gym"
+    puts "Misty"
+else 
+    location = prompt.select("Where would you like to go?", ["Professor Oak's Clinic", "Misty's Gym", "Brock's House", "Pokemon Center", "Police Station", "Go Back"])
+end
+
+
+
+
 
 #Catch Pokemon - what would you like to do?
     #Go for a walk
@@ -59,4 +82,3 @@ name = prompt.ask('What is your name?', default: ENV['USER'])
 #View Pokemon
     #See stats and skills
     #Release into the wild
->>>>>>> 2ca641b35907f522120638374ffd8c21c8951908
