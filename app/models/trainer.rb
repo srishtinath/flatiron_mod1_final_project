@@ -35,8 +35,15 @@ class Trainer < ActiveRecord::Base
         end
     end
     
-    def add_to_caught_pokemon(pokemon, name)
-        Caught_Pokemon.create(trainer: self, pokemon: pokemon, name: name)
+    def add_to_caught_pokemon(pokemon)
+        Caught_Pokemon.create(trainer: self, pokemon: pokemon, level: 1)
+    end
+
+    def change_pokemon_name(pokemon, name)
+        poke = Caught_Pokemon.find_by(id = pokemon.id)
+        poke.update(name: name)
+        poke.save
+        puts "Your pokemon's name has been update to #{name}!"
     end
     
     #throw poke ball method
