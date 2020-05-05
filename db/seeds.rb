@@ -1,6 +1,10 @@
-#Pokemon.delete_all
 Trainer.delete_all
 CaughtPokemon.delete_all
+
+#These are commented so we dont have to keep pulling from pokeApi
+# Pokemon.delete_all
+# PokemonType.delete_all
+# Type.delete_all
 
 
 
