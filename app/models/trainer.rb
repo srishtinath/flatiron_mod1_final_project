@@ -62,6 +62,7 @@ class Trainer < ActiveRecord::Base
     end
 
     def change_party_pokemon
+        CaughtPokemon.all.where(trainer: self)
 
     end
 

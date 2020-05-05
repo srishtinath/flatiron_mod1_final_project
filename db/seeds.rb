@@ -15,4 +15,9 @@ Trainer.create(name: "Don", age: 21)
 
 CaughtPokemon.create(pokemon: Pokemon.first, trainer: Trainer.first)
 CaughtPokemon.create(pokemon: Pokemon.first, trainer: Trainer.second)
+CaughtPokemon.create(pokemon: Pokemon.second, trainer: Trainer.second)
+CaughtPokemon.create(pokemon: Pokemon.second, trainer: Trainer.second)
+CaughtPokemon.create(pokemon: Pokemon.second, trainer: Trainer.second)
+
+
 
