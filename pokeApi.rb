@@ -1,9 +1,11 @@
 require_relative 'config/environment.rb'
+require 'pry'
 
 ##This file is used for filling Pokemon table
 def initial_collect(num)
     num.times do |i|
         data = JSON.parse(RestClient.get("https://pokeapi.co/api/v2/pokemon/#{i+1}"))
+<<<<<<< HEAD
         #count = data["count"]
         name = data["name"]
         xp = data["base_experience"]
@@ -12,6 +14,13 @@ def initial_collect(num)
         capture_rate = JSON.parse(RestClient.get(data["species"]["url"]))["capture_rate"]
         newPokemon = Pokemon.create(name:name,xp:xp,level:1,back_img_url:back_pic,front_img_url:front_pic,capture_rate:capture_rate)
         
+=======
+        count = data["count"]
+        newPokemon = Pokemon.create(name:data["name"],xp:data["base_experience"],level:1)
+        additional_data = JSON.parse(RestClient.get("https://pokeapi.co/api/v2/pokemon-species/#{i+1}/"))
+        newPokemon.update(capture_rate: additional_data["capture_rate"])
+        newPokemon.save
+>>>>>>> 238983fa5bd4ac429ded26761cbea466e27be010
         types = data["types"]
         types.length.times do |x|
             newType = types[x]["type"]["name"]
@@ -24,5 +33,3 @@ def initial_collect(num)
         end
     end
 end
-
-

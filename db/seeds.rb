@@ -1,4 +1,5 @@
-require_relative './../pokeApi.rb'
+require_relative '../pokeApi.rb'
+
 Trainer.delete_all
 CaughtPokemon.delete_all
 Pokemon.delete_all
@@ -14,3 +15,4 @@ Trainer.create(name: "Don", age: 21)
 
 CaughtPokemon.create(pokemon: Pokemon.first, trainer: Trainer.first)
 CaughtPokemon.create(pokemon: Pokemon.first, trainer: Trainer.second)
+
