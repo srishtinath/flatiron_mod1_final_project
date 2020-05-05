@@ -9,6 +9,18 @@ prompt = TTY::Prompt.new
     #Create a new Trainer instance with prompts for name, age, hometown
 
 prompt.say("Welcome to Pokemon World!!!")
+prompt.keypress("Press enter to continue", keys: [:return])
+
+
+acct_creation = prompt.yes?('Would you like to create your trainer?')
+
+if acct_creation
+    name = prompt.ask('What is your name?')
+    age = prompt.ask('How old are you?')
+    hometown = prompt.ask('Where are you from?')
+
+    Trainer.create(name: name, age: age, hometown: hometown)
+end
 name = prompt.ask('What is your name?', default: ENV['USER'])
 
 
