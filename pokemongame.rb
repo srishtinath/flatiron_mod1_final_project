@@ -27,7 +27,7 @@ name = prompt.ask('What is your name?', default: ENV['USER'])
 
 # Choose Starter Pokemon - S
     #create new instance based on choice offered (Bulbasaur, Charmander, Squirtle, Pikachu)
-
+    
 # Now, what would you like to do?
     #Explore the town
     #Catch pokemon
@@ -44,6 +44,7 @@ name = prompt.ask('What is your name?', default: ENV['USER'])
     #Police station
 
 #Catch Pokemon - what would you like to do? - S
+
     #Go for a walk
         #Choose a direction: North, South, East, West
         #Encounter pokemon 
@@ -53,6 +54,8 @@ name = prompt.ask('What is your name?', default: ENV['USER'])
                 #Add to party
                 #Name pokemon
     #End your walk
+
+        
 
 #View Pokemon - S
     #See stats and skills
