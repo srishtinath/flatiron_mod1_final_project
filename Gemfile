@@ -7,4 +7,8 @@ gem 'require_all'
 gem 'sqlite3'
 gem 'pry'
 gem 'rest-client'
+
+gem 'down'
+gem 'catpix'
+gem 'rmagick'
 # gem 'tty-prompt'

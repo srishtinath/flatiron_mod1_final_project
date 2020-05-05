@@ -46,6 +46,7 @@ class Trainer < ActiveRecord::Base
             add_to_caught_pokemon(pokemon)
         else
             puts "The pokemon escaped! Try again!"
+        end
     end
 
     #View all pokemon belonging to trainer
