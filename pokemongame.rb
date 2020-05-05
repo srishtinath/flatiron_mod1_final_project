@@ -16,7 +16,7 @@ def trainer_creation
     acct_creation = prompt.yes?('Would you like to create your trainer?')
     if acct_creation
         name = prompt.ask('What is your name?', required: true)
-        age = prompt.ask('How old are you?', required: true)
+        age = prompt.ask('How old are you?', required: true) #need to limit input to an int
         hometown = prompt.ask('Where are you from?', required: true)
     
         #Trainer.create(name: name, age: age, hometown: hometown)
