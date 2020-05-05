@@ -32,7 +32,7 @@ end
 #different actions chosen add to ready_to_be_caught variable
 def attempt_catch(action)
     if action == "Compliment"
-        @ready_to_be_caught += 5
+        @ready_to_be_caught += 5 #can I use an instance variable when we're not working in a class? would this need to be a global variable?
     elsif action == "Feed berries"
         @ready_to_be_caught += 10
     elsif action == "Taunt"
