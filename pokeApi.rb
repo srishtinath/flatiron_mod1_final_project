@@ -1,10 +1,10 @@
 require_relative 'config/environment.rb'
 
 ##This file is used for filling Pokemon table
-def initial_collect
-    151.times do |i|
+def initial_collect(num)
+    num.times do |i|
         data = JSON.parse(RestClient.get("https://pokeapi.co/api/v2/pokemon/#{i+1}"))
-        count = data["count"]
+        #count = data["count"]
         name = data["name"]
         xp = data["base_experience"]
         front_pic = data["sprites"]["front_default"]
@@ -24,8 +24,5 @@ def initial_collect
         end
     end
 end
-
-
-initial_collect
 
 

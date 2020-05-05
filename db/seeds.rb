@@ -1,12 +1,12 @@
+require_relative './../pokeApi.rb'
 Trainer.delete_all
 CaughtPokemon.delete_all
-
-#These are commented so we dont have to keep pulling from pokeApi
-# Pokemon.delete_all
-# PokemonType.delete_all
-# Type.delete_all
+Pokemon.delete_all
+PokemonType.delete_all
+Type.delete_all
 
 
+initial_collect(20)
 
 Trainer.create(name: "Kyle", age: 21)
 Trainer.create(name: "Srishti", age: 21)

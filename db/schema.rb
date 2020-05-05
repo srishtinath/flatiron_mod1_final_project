@@ -26,9 +26,9 @@ ActiveRecord::Schema.define(version: 2020_05_05_011148) do
     t.string "name"
     t.integer "level"
     t.integer "xp"
+    t.integer "capture_rate"
     t.string "back_img_url"
     t.string "front_img_url"
-    t.integer "capture_rate"
   end
 
   create_table "trainers", force: :cascade do |t|
