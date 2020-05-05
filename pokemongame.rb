@@ -29,8 +29,11 @@ end
 
 def starter_pokemon
     prompt = TTY::Prompt.new
-    pokemon = prompt.select("Select your starter pokemon:", ["Pikachu", "Charmander", "Squirtle", "Bulbasaur"])
+
+    starter_pokemon = prompt.select("Select your starter pokemon:", ["Pikachu", "Charmander", "Squirtle", "Bulbasaur"])
     #add to the caught_pokemon table
+   # pokemon = Pokemon.find_by(name: pokemon)
+    #add_to_caught_pokemon(pokemon)
 end
 
 def choose_starter
@@ -47,6 +50,7 @@ end
     #View all pokemon
 def starting_menu
     prompt = TTY::Prompt.new
+
     action = prompt.select("What would you like to do?", ["Explore Town", "Catch Pokemon", "View My Pokemons", "Exit Game"])
     case action
     when "Explore Town"
@@ -56,7 +60,7 @@ def starting_menu
     when "View My Pokemons"
         puts "My Pokemons"
     else
-        exit(0)
+        abort("Game ended!")
     end
 end
 
@@ -74,6 +78,7 @@ end
 
 def explore
     prompt = TTY::Prompt.new
+
     location = prompt.select("Where would you like to go?", ["Professor Oak's Clinic", "Misty's Gym", "Brock's House", "Pokemon Center", "Police Station", "Go Back"])
 
     case location
