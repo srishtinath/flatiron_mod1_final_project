@@ -5,7 +5,7 @@ require "sinatra/activerecord"
 require "ostruct"
 require "date"
 require_all 'app/models'
-require "JSON"
+require "json"
 require 'rest-client'
 require 'pry'
 
