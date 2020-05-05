@@ -16,6 +16,9 @@ def initial_collect
                 newPokemon.pokemon_types<<PokemonType.create(name:"#{newType}")
             end
         end
+
+        additional_data = JSON.parse(RestClient.get("https://pokeapi.co/api/v2/pokemon-species/#{i+2}/"))
+        capture_rate = additional_data["capture_rate"]
     end
 end
 
