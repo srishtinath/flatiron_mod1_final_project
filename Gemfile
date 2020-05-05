@@ -11,4 +11,5 @@ gem 'rest-client'
 gem 'down'
 gem 'catpix'
 gem 'rmagick'
-# gem 'tty-prompt'
+
+gem 'tty-prompt'
