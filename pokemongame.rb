@@ -13,13 +13,13 @@ prompt.keypress("Press enter to continue", keys: [:return])
 
 def trainer_creation
     prompt = TTY::Prompt.new
-    acct_creation = prompt.yes?('Would you like to create your trainer?')
+    acct_creation = prompt.yes?('Would you like to create your trainer?') #Need to create a Trainer instance to make other methods work
     if acct_creation
         name = prompt.ask('What is your name?', required: true)
         age = prompt.ask('How old are you?', required: true) #need to limit input to an int
         hometown = prompt.ask('Where are you from?', required: true)
     
-        #Trainer.create(name: name, age: age, hometown: hometown)
+        @@trainer1 = Trainer.create(name: name, age: age, hometown: hometown)
     end
 
 end
@@ -34,6 +34,7 @@ def starter_pokemon
 end
 
 def choose_starter
+    prompt = TTY::Prompt.new
     starter = prompt.select("Which starter pokemon would you like to choose?", %w(bulbasaur charmander squirtle pikachu))
     starter_instance = Pokemon.find_by(name: starter)
     new_name = prompt.ask("What would you like to name your new Pokemon?")
@@ -103,46 +104,52 @@ starting_menu
 
 
 #Catch Pokemon - what would you like to do? - S
-
-def choose_direction
-    prompt.select("Which direction would you like to go?", %w(North South East West))
-    if Trainer.encounter_pokemon?
-        Trainer.random_pokemon_generator
-        Trainer.catch_pokemon
-        prompt.yes?("Would you like to catch another pokemon?") ? Trainer.choose_direction : Trainer.walk
-    else
-        puts "Sorry, there are no pokemon here. Try a different direction."
-        Trainer.choose_direction
-    end
-end
-
-choose_direction
-
     #Go for a walk
         #Choose a direction: North, South, East, West
         #Encounter pokemon 
+
+def choose_direction
+    prompt = TTY::Prompt.new
+    prompt.select("Which direction would you like to go?", %w(North South East West))
+    if @@trainer1.encounter_pokemon?
+        @@trainer1.random_pokemon_generator
+        catch_pokemon
+        prompt.yes?("Would you like to catch another pokemon?") ? @@trainer1.choose_direction : @@trainer1.walk
+    else
+        puts "Sorry, there are no pokemon here. Try a different direction."
+        choose_direction
+    end
+end
+
+
+    
         #Attempt to catch or ignore
             #Feed, Compliment, Taunt, Throw pokeball
             #Caught pokemon
                 #Add to party
                 #Name pokemon
-    def catch_pokemon
-        attemptCatch = prompt.yes?("Would you like to catch the pokemon?")
-        if attemptCatch
-            #Feed, Compliment, Taunt, Throw pokeball
-            action = prompt.select("What would you like to do?") do |menu|
-                menu.choice 'Feed', 1
-                menu.choice 'Compliment', 2
-                menu.choice 'Taunt', 3
-                menu.choice 'Throw pokeball', 4
-            end
-            Trainer.first.attempt_catch(self, @pokemon_encounter)
-            #Caught pokemon
-                #Add to party
-                #Name pokemon
+def catch_pokemon
+    prompt = TTY::Prompt.new
+    attemptCatch = prompt.yes?("Would you like to catch the pokemon?")
+    if attemptCatch
+        #Feed, Compliment, Taunt, Throw pokeball
+        action = prompt.select("What would you like to do?") do |menu|
+            menu.choice 'Feed', 1
+            menu.choice 'Compliment', 2
+            menu.choice 'Taunt', 3
+            menu.choice 'Throw pokeball', 4
         end
+        @@trainer1.attempt_catch(self, @pokemon_encounter)
+        #Caught pokemon
+            #Add to party
+            #Name pokemon
+    else
+        choose_direction
     end
-    #End your walk
+end
+
+choose_direction
+catch_pokemon
 
         
 
