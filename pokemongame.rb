@@ -19,10 +19,14 @@ if acct_creation
 
     #Trainer.create(name: name, age: age, hometown: hometown)
 end
+<<<<<<< HEAD
+=======
+name = prompt.ask('What is your name?', default: ENV['USER'])
+>>>>>>> 22a3827d9d569dfc8d1da7e70febe83c20c3e13d
 
 
 
-# Choose Starter Pokemon
+# Choose Starter Pokemon - S
     #create new instance based on choice offered (Bulbasaur, Charmander, Squirtle, Pikachu)
 
 pokemon = prompt.select("Select your starter pokemon:", ["Pikachu", "Charmander", "Squirtle", "Bulbasaur"])
@@ -33,11 +37,15 @@ pokemon = prompt.select("Select your starter pokemon:", ["Pikachu", "Charmander"
     #Catch pokemon
     #View all pokemon
 
+<<<<<<< HEAD
 action = prompt.select("What would you like to do?", ["Explore Town", "Catch Pokemon", "View My Pokemons"])
 
 
 
 #Explore
+=======
+#Explore - D
+>>>>>>> 22a3827d9d569dfc8d1da7e70febe83c20c3e13d
     #Professor Oak's Clinic
         #change party pokemon
     #Misty's Gym
@@ -68,7 +76,7 @@ end
 
 
 
-#Catch Pokemon - what would you like to do?
+#Catch Pokemon - what would you like to do? - S
     #Go for a walk
         #Choose a direction: North, South, East, West
         #Encounter pokemon 
@@ -79,6 +87,6 @@ end
                 #Name pokemon
     #End your walk
 
-#View Pokemon
+#View Pokemon - S
     #See stats and skills
     #Release into the wild
