@@ -50,7 +50,6 @@ class Trainer < ActiveRecord::Base
     def add_to_caught_pokemon(pokemon)
         CaughtPokemon.create(trainer: self, pokemon: pokemon, level: 1, party: true)
     end
-<<<<<<< HEAD
     
     #throw poke ball method
     
@@ -60,13 +59,12 @@ class Trainer < ActiveRecord::Base
         else
             puts "The pokemon escaped! Try again!"
         end
-=======
+    end
 
     def change_pokemon_name(pokemon, name)
         poke = CaughtPokemon.find_by(id: pokemon.id)
         poke.update(name: name)
         puts "Your pokemon's name has been updated to #{name}!"
->>>>>>> 0522be6a0b68daafa306ae62b607bd9c4e6aa8bc
     end
 
     #View all pokemon belonging to trainer

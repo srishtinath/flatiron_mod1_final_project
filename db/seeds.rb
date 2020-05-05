@@ -1,10 +1,10 @@
 require_relative '../pokeApi.rb'
 
-# Trainer.delete_all
-# CaughtPokemon.delete_all
-# Pokemon.delete_all
-# PokemonType.delete_all
-# Type.delete_all
+Trainer.delete_all
+CaughtPokemon.delete_all
+Pokemon.delete_all
+PokemonType.delete_all
+Type.delete_all
 
 
 initial_collect(150)
