@@ -50,5 +50,6 @@ def pokemon_caught?(trainer,pokemon)
         add_to_caught_pokemon(trainer,pokemon)
     else
         puts "The pokemon escaped! Try again!"
+    end
 end
 
