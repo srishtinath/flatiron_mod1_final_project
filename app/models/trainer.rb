@@ -94,7 +94,6 @@ class Trainer < ActiveRecord::Base
     def release(pokemon)
         poke = Caught_Pokemon.find_by(pokemon.id)
         poke.update(trainer_id: nil)
-        poke.save
     end
 
 end
