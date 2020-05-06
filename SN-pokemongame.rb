@@ -120,7 +120,11 @@ def post_catch_actions
     prompt = TTY::Prompt.new
     action = prompt.select("What would you like to do?", ["Catch more pokemon", "View my pokemon", "Go Back", "Exit Game"])
     if action == "Catch more pokemon"
-        choose_direction
+        if CaughtPokemon.where(trainer: $trainer1, party: true).count >= 6
+            puts "Your party is full! Please put some in storage with Professor Oak before catching more pokemon!"
+        else 
+            choose_direction
+        end
     elsif action == "View my pokemon"
         view_all_pokemon
     elsif action == "Exit Game"
