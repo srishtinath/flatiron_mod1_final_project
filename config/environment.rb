@@ -9,9 +9,9 @@ require "json"
 require 'rest-client'
 require 'pry'
 
-# require 'rmagick'
-# require 'catpix'
-# require "down"
+require 'rmagick'
+require 'catpix'
+require "down"
 
 require "tty-prompt"
 

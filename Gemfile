@@ -8,9 +8,9 @@ gem 'sqlite3'
 gem 'pry'
 gem 'rest-client'
 
-# gem 'rmagick'
-# gem 'down'
-# gem 'catpix'
+gem 'rmagick'
+gem 'down'
+gem 'catpix'
 
 
 gem 'tty-prompt'
