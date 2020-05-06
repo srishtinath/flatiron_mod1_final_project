@@ -170,6 +170,7 @@ def choose_direction
         if rand(100) >= 50 
             new_pokemon = Pokemon.random_pokemon_generator
             $ready_to_be_caught = (new_pokemon.capture_rate)/3 +30
+            prompt.keypress("Press enter to continue", keys: [:return])
             attempt_catch(new_pokemon)
         else
             puts "Sorry, there are no pokemon here. Maybe try another direction?"
@@ -197,6 +198,7 @@ def attempt_catch(pokemon)
         end
     else
         prompt.ok("The pokemon ran away to fight another day!")
+        prompt.keypress("Press enter to continue", keys: [:return])
         choose_direction
     end
 end
@@ -207,24 +209,27 @@ def catch_actions(action, pokemon)
     if action == "Compliment"
         $ready_to_be_caught += 10
         prompt.ok("The pokemon is flattered!")
+        prompt.keypress("Press enter to continue", keys: [:return])
         attempt_catch(pokemon)
     elsif action == "Feed berries"
         $ready_to_be_caught += 20
         prompt.ok("The pokemon loves berries!")
+        prompt.keypress("Press enter to continue", keys: [:return])
         attempt_catch(pokemon)
     elsif action == "Taunt"
         $ready_to_be_caught -= 5
         prompt.error("The pokemon did not like that :(")
+        prompt.keypress("Press enter to continue", keys: [:return])
         attempt_catch(pokemon)
     elsif action == "Throw pokeball"
         pokeball_throw(pokemon)
-        
     end
 end
 
 def pokeball_throw(pokemon)
     prompt = TTY::Prompt.new
-    if $ready_to_be_caught >= 60
+    prompt.keypress("Pokeball has been thrown... press any key to continue")
+    if $ready_to_be_caught >= 70
         new_instance = add_to_caught_pokemon(pokemon)
         prompt.ok("#{pokemon.name.capitalize} was caught and added to your party! Congratulations!")
         name = prompt.ask("What would you like to name your new pokemon?")
