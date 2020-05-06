@@ -52,7 +52,7 @@ def display_trainer_and_pokemon(trainer,pokemon)
         print_pic('temp/combine.png').display
 end
 
-def display_pokemon(pokemon,format)
+def display_pokemon(pokemon,format,options = {:x=>20,:y=>20,:width=>50,:height=>50,:resizeHeightWidth=>25})
     if format=="grid"
         grid = true
     elsif format == "row"
@@ -63,12 +63,12 @@ def display_pokemon(pokemon,format)
     count.times do |i|
         index = i*2
         Magick::ImageList.new(pokemon[index])
-        .crop(20,20,50,50)
-        .resize_to_fit(25,25)
+        .crop(options[:x],options[:y],options[:width],options[:height])
+        .resize_to_fit(options[:resizeHeightWidth],options[:resizeHeightWidth])
         .write("temp/#{i}-1.png")
         Magick::ImageList.new(pokemon[index+1])
-        .crop(20,20,50,50)
-        .resize_to_fit(25,25)
+        .crop(options[:x],options[:y],options[:width],options[:height])
+        .resize_to_fit(options[:resizeHeightWidth],options[:resizeHeightWidth])
         .write("temp/#{i}-2.png")
         Magick::ImageList.new("temp/#{i}-1.png","temp/#{i}-2.png")
             .append(grid)
@@ -91,12 +91,15 @@ def scroll_through_pokemon(pokemon)
 end
 
 def display_starters
-    bulb = 'assets/bulbasaur.png'
-    char = 'assets/charmander.png'
-    squirt = 'assets/squirtle.png'
-    pika = 'assets/pikachu.png'
-    scroll_through_pokemon([bulb,char,squirt,pika])
-    display_pokemon([bulb,char,squirt,pika],"row")
+    scroll_through_pokemon(get_starters('highres'))
+    display_pokemon(get_starters('lowres'),"row",{:x=>30,:y=>20,:width=>250,:height=>250,:resizeHeightWidth=>50})
 end
 
-
+def get_starters(res)
+    starters=[ 
+        bulb = "assets/#{res}/bulbasaur.png",
+        char = "assets/#{res}/charmander.png",
+        squirt = "assets/#{res}/squirtle.png",
+        pika = "assets/#{res}/pikachu.png"
+    ]
+end
