@@ -7,7 +7,7 @@ PokemonType.delete_all
 Type.delete_all
 
 
-initial_collect(20)
+initial_collect(25)
 
 kyle = Trainer.create(name: "Kyle", age: 21)
 srishti = Trainer.create(name: "Srishti", age: 21)

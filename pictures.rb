@@ -52,14 +52,51 @@ def display_trainer_and_pokemon(trainer,pokemon)
         print_pic('temp/combine.png').display
 end
 
-def display_pokemon(trainer)
-    img_string = ''
-    trainer.pokemons.each do |i|
-        img_string+="#{download_image(i)}"
-        if(i!=tainer.pokemons.last)
-            img_string+=', '
-        end
+def display_pokemon(pokemon,format)
+    if format=="grid"
+        grid = true
+    elsif format == "row"
+        grid = false
     end
+    image_list = Magick::ImageList.new()
+    count = (pokemon.length.to_f/2).ceil()
+    count.times do |i|
+        index = i*2
+        Magick::ImageList.new(pokemon[index])
+        .crop(20,20,50,50)
+        .resize_to_fit(25,25)
+        .write("temp/#{i}-1.png")
+        Magick::ImageList.new(pokemon[index+1])
+        .crop(20,20,50,50)
+        .resize_to_fit(25,25)
+        .write("temp/#{i}-2.png")
+        Magick::ImageList.new("temp/#{i}-1.png","temp/#{i}-2.png")
+            .append(grid)
+            .write("temp/#{i}-1and2.png")
+        image_list.concat(Magick::Image.read("temp/#{i}-1and2.png"))
+    end
+    image_list.append(false).write('temp/combine.png')
+    print_pic('temp/combine.png').display
+end
+
+def scroll_through_pokemon(pokemon)
+    image_list = Magick::ImageList.new()
+    count = (pokemon.length.to_f/2).ceil()
+    count.times do |i|
+        image_list.concat(Magick::Image.read(pokemon[i*2]))
+        image_list.concat(Magick::Image.read(pokemon[(i*2)+1]))
+    end
+    image_list.append(true).write('temp/combine.png')
+    print_pic('temp/combine.png').display
+end
+
+def display_starters
+    bulb = 'assets/bulbasaur.png'
+    char = 'assets/charmander.png'
+    squirt = 'assets/squirtle.png'
+    pika = 'assets/pikachu.png'
+    scroll_through_pokemon([bulb,char,squirt,pika])
+    display_pokemon([bulb,char,squirt,pika],"row")
 end
 
 
