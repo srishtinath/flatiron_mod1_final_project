@@ -54,6 +54,7 @@ def choose_starter
     starting_menu
 end
 
+
 # Now, what would you like to do?
     #Explore the town
     #Catch pokemon
@@ -67,7 +68,7 @@ def starting_menu
     when "Catch Pokemon"
         catch_pokemon
     when "View My Pokemon"
-        view_all_pokemon
+        $trainer1.view_pokemon
     when "View Pokedex"
         pokedex
     else
@@ -107,8 +108,8 @@ end
 
 def poke_center #view all pokemons
     prompt = TTY::Prompt.new
-    pokemons = Pokemon.all.each {|poke| poke.pokemon.name}
-    prompt.enum_select("View All Pokemons", pokemons, per_page: 6)
+    pokemons = Pokemon.all.each {|pokemon| puts "#{pokemon.name.capitalize}"}
+    prompt.enum_select("Pokedex", pokemons, per_page: 6)
 
 end
 
