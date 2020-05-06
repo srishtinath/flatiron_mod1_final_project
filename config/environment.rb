@@ -13,6 +13,8 @@ require 'rmagick'
 require 'catpix'
 require "down"
 
+require_all 'source'
+
 require "tty-prompt"
 
 ENV["SINATRA_ENV"] ||= 'development'
