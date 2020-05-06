@@ -2,7 +2,6 @@
 require "tty-prompt"
 require_relative 'config/environment.rb'
 require_all 'app/models'
-require_relative 'SN-pokemongame.rb'
 
 prompt = TTY::Prompt.new
 # ans = prompt.select('What size?') do |menu|
@@ -38,8 +37,8 @@ def find_my_trainer
     puts "Please provide us with the information used to create your trainer:"
     name = prompt.ask('What is your name?', required: true)
     age = prompt.ask('How old are you?', required: true) #need to limit input to an int
-    trainer_found = Trainer.find_by(name: name, age: age)
-    if trainer_found
+    $trainer1 = Trainer.find_by(name: name, age: age)
+    if $trainer1
         prompt.ok("Welcome back #{name}!")
         starting_menu
     else
@@ -51,10 +50,10 @@ end
 
 def choose_starter
     prompt = TTY::Prompt.new
-    starter = prompt.select("Pick your starter pokemon:", %w(Bulbasaur Charmander Squirtle Pikachu))
+    starter = prompt.select("Pick your starter pokemon:", %w(bulbasaur charmander squirtle pikachu))
     starter_instance = Pokemon.find_by(name: starter)
     new_name = prompt.ask("What would you like to name your new Pokemon?")
-    CaughtPokemon.create(pokemon: starter_instance, party: true, name: new_name)
+    CaughtPokemon.create(trainer: $trainer1, pokemon: starter_instance, party: true, name: new_name)
     prompt.ok("Congratulations! You just took the first step on your journey to become the greatest Pokemon master!")
     starting_menu
 end
@@ -65,7 +64,7 @@ end
     #View all pokemon
 def starting_menu
     prompt = TTY::Prompt.new
-    action = prompt.select("What would you like to do?", ["Explore Town", "Catch Pokemon", "View My Pokemons", "View All Pokemons", "Exit Game"])
+    action = prompt.select("What would you like to do?", ["Explore Town", "Catch Pokemon", "View My Pokemon", "View Pokedex", "Exit Game"])
     case action
     when "Explore Town"
         explore
@@ -73,8 +72,8 @@ def starting_menu
         catch_pokemon
     when "View My Pokemon"
         view_all_pokemon
-    when "View All Pokemons"
-        puts "All pokemons"
+    when "View Pokedex"
+        pokedex
     else
         abort("Game ended!")
     end
@@ -135,7 +134,10 @@ def play_game
     begin_game
 end
 
-play_game
+def pokedex
+    Pokemon.all.each {|pokemon| puts "#{pokemon.id} #{pokemon.name.capitalize}"}
+    starting_menu
+end
 
 
 def catch_pokemon
@@ -246,6 +248,7 @@ def post_catch_actions
     if action == "Catch more pokemon"
         if CaughtPokemon.where(trainer: $trainer1, party: true).count >= 6
             puts "Your party is full! Please put some in storage with Professor Oak before catching more pokemon!"
+            catch_pokemon
         else 
             choose_direction
         end
@@ -275,3 +278,5 @@ def view_all_pokemon
         post_catch_actions
     end
 end
+
+play_game
