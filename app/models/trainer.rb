@@ -2,10 +2,10 @@ class Trainer < ActiveRecord::Base
     has_many :caught_pokemons
     has_many :pokemons, through: :caught_pokemons
 
-    def initialize(args)
-        super
-            self.back_img_url = 'https://i.imgur.com/YzPr8WH.png'
-    end
+    # def initialize(args)
+    #     # super
+    #     #     self.back_img_url = 'https://i.imgur.com/YzPr8WH.png'
+    # end
     
 
     def change_pokemon_name(pokemon, name)
