@@ -95,8 +95,6 @@ def display_starters
     char = download_image(Pokemon.find_by(name:"charmander"))
     squirt = download_image(Pokemon.find_by(name:"squirtle"))
     pika = download_image(Pokemon.find_by(name:"pikachu"))
-    pika2 = download_image(Pokemon.find_by(name:"pikachu"))
-    pika3 = download_image(Pokemon.find_by(name:"pikachu"))
 
     display_pokemon([bulb,char,squirt,pika],"row")
 end
