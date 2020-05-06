@@ -2,7 +2,6 @@
 require "tty-prompt"
 require_relative 'config/environment.rb'
 require_all 'app/models'
-require_relative 'SN-pokemongame.rb'
 
 prompt = TTY::Prompt.new
 # ans = prompt.select('What size?') do |menu|
