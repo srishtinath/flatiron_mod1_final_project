@@ -14,10 +14,6 @@ prompt = TTY::Prompt.new
 $trainer1 = Trainer.last
 
 
-
-
-
-
 # Create Trainer
 #Create a new Trainer instance with prompts for name, age, hometown
 
@@ -37,8 +33,8 @@ def find_my_trainer
     puts "Please provide us with the information used to create your trainer:"
     name = prompt.ask('What is your name?', required: true)
     age = prompt.ask('How old are you?', required: true) #need to limit input to an int
-    trainer_found = Trainer.find_by(name: name, age: age)
-    if trainer_found
+    $trainer1= Trainer.find_by(name: name, age: age)
+    if $trainer1
         prompt.ok("Welcome back #{name}!")
         starting_menu
     else
@@ -89,22 +85,53 @@ end
         #learn about how game works
     #Pokemon Center
     #Police station
+def brocks_house
+    prompt = TTY::Prompt.new
+    prompt.ok("Hey #{$trainer1.name}!!!")
+    prompt.ok("Welcome to mi casa}!!!")
+    choice = prompt.select("What can I do for you", ["Game Instructions", "Chit Chat", "Leave"])
+    case choice
+    when "Game Instructions"
+        puts "Game Instructions:"
+        puts "Party Pokemon"
+        puts "How to Catch a Pokemon"
+    when "Chit Chat"
+        puts "lets chitty chat"
+    else
+        explore
+    end
+end
 
+def oaks_clinic #call the change party pokemon method in here
+end
+
+def poke_center #view all pokemons
+    prompt = TTY::Prompt.new
+    pokemons = Pokemon.all.select {|poke| poke.name}
+    prompt.enum_select("View All Pokemons", pokemons, per_page: 6)
+
+end
+
+def police
+end
+
+def mistys_gym
+end
 
 def explore
     prompt = TTY::Prompt.new
     location = prompt.select("Where would you like to go?", ["Professor Oak's Clinic", "Misty's Gym", "Brock's House", "Pokemon Center", "Police Station", "Go Back"])
     case location
     when "Brock's House"
-        puts "Brock man"
+        brocks_house
     when "Professor Oak's Clinic"
-        puts "Oaky"
+        oaks_clinic
     when "Pokemon Center"
-        puts "Center"
+        poke_center
     when "Police Station"
-        puts "Policia"
+        police
     when "Misty's Gym"
-        puts "Misty"
+        mistys_gym
     else 
         starting_menu
     end  
@@ -127,11 +154,14 @@ end
 ##pastel.alias_color(:funky, :red, :bold)   need to install gem pastel to use colors
 #pastel.funky.on_green('unicorn')   # => will use :red, :bold color
 
+
 def play_game
     prompt = TTY::Prompt.new
     prompt.say("Welcome to Pokemon World!!!")
     prompt.keypress("Press enter to continue", keys: [:return])
     begin_game
 end
+
+
 
 play_game
