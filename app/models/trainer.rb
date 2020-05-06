@@ -1,6 +1,7 @@
 class Trainer < ActiveRecord::Base
     has_many :caught_pokemons
     has_many :pokemons, through: :caught_pokemons
+    
     attr_accessor :back_img_url
     def initialize(args)
         super
@@ -66,13 +67,6 @@ class Trainer < ActiveRecord::Base
     def move_pokemon_to_storage(pokemon)
         pokemon.party = false
         puts "You have now put #{pokemon.name} in storage!"
-    end
-
-    #train pokemon
-    def train(pokemon)
-        poke = CaughtPokemon.find_by(pokemon.id)
-        poke.update(level += 1)
-        poke.save
     end
     
     #release into wild
