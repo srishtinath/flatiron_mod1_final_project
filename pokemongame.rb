@@ -47,10 +47,10 @@ def choose_starter
     prompt = TTY::Prompt.new
     system "clear"
     display_starters
-    starter = prompt.select("Pick your starter pokemon:", %w(Bulbasaur Charmander Squirtle Pikachu))
+    starter = prompt.select("Pick your starter pokemon:", %w(bulbasaur charmander squirtle pikachu))
     starter_instance = Pokemon.find_by(name: starter)
     new_name = prompt.ask("What would you like to name your new Pokemon?")
-    CaughtPokemon.create(pokemon: starter_instance, party: true, name: new_name)
+    CaughtPokemon.create(pokemon: starter_instance, party: true, name: new_name, level: 1, trainer: $trainer1)
     prompt.ok("Congratulations! You just took the first step on your journey to become the greatest Pokemon master!")
     starting_menu
 end
@@ -62,7 +62,7 @@ end
     #View all pokemon
 def starting_menu
     prompt = TTY::Prompt.new
-    action = prompt.select("What would you like to do?", ["Explore Town", "Catch Pokemon", "View My Pokemons", "View All Pokemons", "Exit Game"])
+    action = prompt.select("What would you like to do?", ["Explore Town", "Catch Pokemon", "View My Pokemon", "View Pokedex", "Exit Game"])
     case action
     when "Explore Town"
         explore
@@ -70,7 +70,7 @@ def starting_menu
         catch_pokemon
     when "View My Pokemon"
         view_all_pokemon
-    when "View All Pokemons"
+    when "View Pokedex"
         poke_center
     else
         abort("Game ended!")
@@ -132,6 +132,18 @@ end
 
 def oaks_clinic #call the change party pokemon method in here
     prompt = TTY::Prompt.new
+    prompt.say("Welcome to Professor Oak's clinic!")
+    choice = prompt.select("What would you like to do?", ["Talk to Professor Oak", "Change my party pokemon", "Go Back"])
+        if choice == "Talk to Professor Oak"
+            puts "Hello #{$trainer1.name}! So kind of you to stop by! Have I told you about my grandson Gary?"
+            puts "He's caught a MILLION pokemon!"
+            puts "Just kidding! Gary is one of the best pokemon trainers out there though... you could learn something from him!"
+        elsif choice == "Change my party pokemon"
+            change_party_pokemon
+        else
+            explore
+        end
+
 end
 
 def poke_center #view all pokemons
@@ -207,10 +219,13 @@ end
                 remove_pokemon_from_party
             elsif choice == "Add pokemon to party"
                 add_pokemon_to_party
+                oaks_clinic
             elsif choice == "Change pokemon name"
                 change_pokemon_name
+                oaks_clinic
             elsif choice == "Release pokemon to wild"
                 release_pokemon
+                oaks_clinic
             else
                 oaks_clinic
             end
