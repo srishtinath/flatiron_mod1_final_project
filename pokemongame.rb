@@ -21,7 +21,7 @@ def trainer_creation
     prompt = TTY::Prompt.new
     puts "Please enter your account information:"
     name = prompt.ask('What is your name?', required: true)
-    age = prompt.ask('How old are you?', required: true) #need to limit input to an int
+    age = prompt.ask('How old are you?', required: true).to_i
     hometown = prompt.ask('Where are you from?', required: true)
     prompt.ok("Trainer succesfully created. Enjoy the game, #{name}!!!")
     $trainer1 = Trainer.create(name: name, age: age, hometown: hometown)
@@ -50,6 +50,7 @@ def choose_starter
     starter = prompt.select("Pick your starter pokemon:", %w(bulbasaur charmander squirtle pikachu))
     starter_instance = Pokemon.find_by(name: starter)
     new_name = prompt.ask("What would you like to name your new Pokemon?")
+    new_name ||= starter_instance.name
     CaughtPokemon.create(trainer: $trainer1, pokemon: starter_instance, party: true, name: new_name, level: 1)
     prompt.ok("Congratulations! You just took the first step on your journey to become the greatest Pokemon master!")
     starting_menu
@@ -128,6 +129,18 @@ def brocks_house
 end
 
 def oaks_clinic #call the change party pokemon method in here
+    prompt = TTY::Prompt.new
+    choice = prompt.select("What would you like to do?", ["Change party pokemon", "Chat with Professor Oak", "Go Back"])
+        if choice == "Change party pokemon"
+            change_party_pokemon
+        elsif choice == "Chat with Professor Oak"
+            puts "Well, hello, there #{$trainer1.name}! I'm so glad you stopped by. Have I told you about my grandson Gary??"
+            puts "He's caught over a MILLION pokemon!"
+            puts "Just kidding! But he is a pokemon master!"
+            oaks_clinic
+        else
+            explore
+        end
 end
 
 def poke_center #view all pokemons
@@ -154,37 +167,6 @@ def mistys_gym
     
 end
 
-
-def begin_game
-    prompt = TTY::Prompt.new
-    choice = prompt.select("", ["Start a new game!", "Continue your game!", "Exit"], active_color: :cyan)
-    case choice
-    when "Start a new game!"
-        trainer_creation
-        choose_starter
-    when "Continue your game!"
-        find_my_trainer
-    else
-        abort("Game Exited")
-    end
-end
-
-##pastel.alias_color(:funky, :red, :bold)   need to install gem pastel to use colors
-#pastel.funky.on_green('unicorn')   # => will use :red, :bold color
-
-
-def play_game
-    prompt = TTY::Prompt.new
-    prompt.say("Welcome to Pokemon World!!!")
-    prompt.keypress("Press enter to continue", keys: [:return])
-    begin_game
-end
-
-
-def pokedex
-    Pokemon.all.each {|pokemon| puts "#{pokemon.id} #{pokemon.name.capitalize}"}
-    starting_menu
-end
 
 #catch pokemon methods
 
@@ -329,27 +311,78 @@ end
 
 #train pokemon methods
 
-def choose_pokemon_to_train
+    def choose_pokemon_to_train
+        prompt = TTY::Prompt.new
+        party_array = party_pokemon($trainer1).map{|poke| poke.name}
+        pokepoke = prompt.select("Which pokemon from your party would you like to train?", party_array)
+        train_pokemon(pokepoke)
+        choice = prompt.yes?("Would you like to train another pokemon?")
+        if choice 
+            choose_pokemon_to_train
+        else 
+            prompt.ok("Misty says goodbye and good luck!")
+            mistys_gym
+        end
+    end
+
+    def train_pokemon(pokemon_name) #level up by 1
+        prompt = TTY::Prompt.new
+
+        poke = CaughtPokemon.find_by(name: pokemon_name)
+        new_level = (poke.level) + 1
+        poke.update(level: new_level)
+        prompt.ok("Congratulations! #{pokemon_name} is now at level #{poke.level}!")
+    end
+
+
+#change party pokemon methods
+
+    def change_party_pokemon
+        prompt = TTY::Prompt.new
+        choice = prompt.select("What would you like to do?", ["Remove pokemon from party", "Add pokemon to party", "Change pokemon name", "Go Back"])
+            if choice == "Remove pokemon from party"
+                remove_pokemon_from_party
+            elsif choice == "Add pokemon to party"
+                add_pokemon_to_party
+            elsif choice == "Change pokemon name"
+                change_pokemon_name
+            else
+                oaks_clinic
+            end
+    end
+
+    def remove_pokemon_from_party
+        
+    end
+
+    def add_pokemon_to_party
+    end
+
+    def change_pokemon_name
+    end
+
+def begin_game
     prompt = TTY::Prompt.new
-    party_array = party_pokemon($trainer1).map{|poke| poke.name}
-    pokepoke = prompt.select("Which pokemon from your party would you like to train?", party_array)
-    train_pokemon(pokepoke)
-    choice = prompt.yes?("Would you like to train another pokemon?")
-    if choice 
-        choose_pokemon_to_train
-    else 
-        prompt.ok("Misty says goodbye and good luck!")
-        mistys_gym
+    choice = prompt.select("", ["Start a new game!", "Continue your game!", "Exit"], active_color: :cyan)
+    case choice
+    when "Start a new game!"
+        trainer_creation
+        choose_starter
+    when "Continue your game!"
+        find_my_trainer
+    else
+        abort("Game Exited")
     end
 end
 
-def train_pokemon(pokemon_name) #level up by 1
+##pastel.alias_color(:funky, :red, :bold)   need to install gem pastel to use colors
+#pastel.funky.on_green('unicorn')   # => will use :red, :bold color
+
+
+def play_game
     prompt = TTY::Prompt.new
-
-    poke = CaughtPokemon.find_by(name: pokemon_name)
-    new_level = (poke.level) + 1
-    poke.update(level: new_level)
-    prompt.ok("Congratulations! #{pokemon_name} is now at level #{poke.level}!")
+    prompt.say("Welcome to Pokemon World!!!")
+    prompt.keypress("Press enter to continue", keys: [:return])
+    begin_game
 end
-
     play_game
