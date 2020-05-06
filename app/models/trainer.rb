@@ -66,13 +66,6 @@ class Trainer < ActiveRecord::Base
         pokemon.party = false
         puts "You have now put #{pokemon.name} in storage!"
     end
-
-    #train pokemon
-    def train(pokemon)
-        poke = CaughtPokemon.find_by(pokemon.id)
-        poke.update(level += 1)
-        poke.save
-    end
     
     #release into wild
     def release(pokemon)
