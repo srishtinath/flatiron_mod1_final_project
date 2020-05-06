@@ -2,9 +2,6 @@
 require "tty-prompt"
 require_relative 'config/environment.rb'
 require_all 'app/models'
-<<<<<<< HEAD
-#require_relative 'SN-pokemongame.rb'
-=======
 
 prompt = TTY::Prompt.new
 # ans = prompt.select('What size?') do |menu|
@@ -13,12 +10,11 @@ prompt = TTY::Prompt.new
 #     menu.choice 'large', 3
 # end
 # puts ans
->>>>>>> b1e58f2bd6f1b17163a414bcd4de4982f9fe99a6
 
 $trainer1 = Trainer.last
 
 # Create Trainer
-#Create a new Trainer instance with prompts for name, age, hometown
+# Create a new Trainer instance with prompts for name, age, hometown
 
 def trainer_creation
     prompt = TTY::Prompt.new
@@ -73,11 +69,9 @@ def starting_menu
     when "Catch Pokemon"
         catch_pokemon
     when "View My Pokemon"
-        $trainer1.view_pokemon
-    when "View Pokedex"
         view_all_pokemon
     when "View All Pokemons"
-        puts "All pokemons"
+        poke_center
     else
         abort("Game ended!")
     end
@@ -102,7 +96,7 @@ def explore
     when "Brock's House"
         brocks_house
     when "Professor Oak's Clinic"
-        puts "Oaky"
+        oaks_clinic
     when "Pokemon Center"
         poke_center
         explore
@@ -137,6 +131,7 @@ def brocks_house
 end
 
 def oaks_clinic #call the change party pokemon method in here
+    prompt = TTY::Prompt.new
 end
 
 def poke_center #view all pokemons
