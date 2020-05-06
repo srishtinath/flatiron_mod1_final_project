@@ -9,7 +9,10 @@ prompt = TTY::Prompt.new
 #Create a new Trainer instance with prompts for name, age, hometown
 
 $trainer1 = Trainer.last
-$trainer1.update(name: "Srishti", age: 26, hometown: "Pallet town")
+
+
+
+# @@trainer1 = Trainer.first
 
 def catch_pokemon
     if CaughtPokemon.where(trainer: $trainer1, party: true).count >= 6
