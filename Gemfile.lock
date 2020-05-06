@@ -12,10 +12,20 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
       zeitwerk (~> 2.2)
+    addressable (2.7.0)
+      public_suffix (>= 2.0.2, < 5.0)
+    catpix (0.2.0)
+      docopt (~> 0.5, >= 0.5.0)
+      rmagick (~> 2.15, >= 2.15.2)
+      ruby-terminfo (~> 0.1, >= 0.1.1)
+      tco (~> 0.1, >= 0.1.8)
     coderay (1.1.2)
     concurrent-ruby (1.1.6)
+    docopt (0.6.1)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
+    down (5.1.1)
+      addressable (~> 2.5)
     equatable (0.6.1)
     http-accept (1.7.0)
     http-cookie (1.0.3)
@@ -37,6 +47,7 @@ GEM
     pry (0.13.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
+    public_suffix (4.0.4)
     rack (2.2.2)
     rack-protection (2.0.8.1)
       rack
@@ -47,6 +58,8 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
+    rmagick (2.16.0)
+    ruby-terminfo (0.1.1)
     ruby2_keywords (0.0.2)
     sinatra (2.0.8.1)
       mustermann (~> 1.0)
@@ -57,6 +70,7 @@ GEM
       activerecord (>= 3.2)
       sinatra (>= 1.0)
     sqlite3 (1.4.2)
+    tco (0.1.8)
     thread_safe (0.3.6)
     tilt (2.0.10)
     tty-color (0.5.1)
@@ -83,10 +97,13 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord
+  catpix
+  down
   pry
   rake
   require_all
   rest-client
+  rmagick
   sinatra-activerecord
   sqlite3
   tty-prompt
