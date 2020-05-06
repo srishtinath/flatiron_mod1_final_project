@@ -10,4 +10,8 @@ class Pokemon < ActiveRecord::Base
         puts "A wild #{pokemon_generated.name} appeared!"
         pokemon_generated
     end
+
+
+
+
 end

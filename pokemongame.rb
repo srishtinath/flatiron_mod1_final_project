@@ -2,6 +2,9 @@
 require "tty-prompt"
 require_relative 'config/environment.rb'
 require_all 'app/models'
+<<<<<<< HEAD
+#require_relative 'SN-pokemongame.rb'
+=======
 
 prompt = TTY::Prompt.new
 # ans = prompt.select('What size?') do |menu|
@@ -10,13 +13,9 @@ prompt = TTY::Prompt.new
 #     menu.choice 'large', 3
 # end
 # puts ans
+>>>>>>> b1e58f2bd6f1b17163a414bcd4de4982f9fe99a6
 
 $trainer1 = Trainer.last
-
-
-
-
-
 
 # Create Trainer
 #Create a new Trainer instance with prompts for name, age, hometown
@@ -60,6 +59,7 @@ def choose_starter
     starting_menu
 end
 
+
 # Now, what would you like to do?
     #Explore the town
     #Catch pokemon
@@ -73,6 +73,8 @@ def starting_menu
     when "Catch Pokemon"
         catch_pokemon
     when "View My Pokemon"
+        $trainer1.view_pokemon
+    when "View Pokedex"
         view_all_pokemon
     when "View All Pokemons"
         puts "All pokemons"
@@ -98,19 +100,68 @@ def explore
     location = prompt.select("Where would you like to go?", ["Professor Oak's Clinic", "Misty's Gym", "Brock's House", "Pokemon Center", "Police Station", "Go Back"])
     case location
     when "Brock's House"
-        puts "Brock man"
+        brocks_house
     when "Professor Oak's Clinic"
         puts "Oaky"
     when "Pokemon Center"
-        puts "Center"
+        poke_center
+        explore
     when "Police Station"
-        puts "Policia"
+        prompt.warn("This is the Police station. You don't want to end up in here!")
     when "Misty's Gym"
-        puts "Misty"
+        mistys_gym
     else 
         starting_menu
     end  
 end
+
+def party_pokemon(trainer)
+    CaughtPokemon.where(trainer: trainer, party: true)
+end
+
+def brocks_house
+    prompt = TTY::Prompt.new
+    prompt.ok("Hey #{$trainer1.name}!!!")
+    prompt.ok("Welcome to mi casa}!!!")
+    choice = prompt.select("What can I do for you", ["Game Instructions", "Chit Chat", "Leave"])
+    case choice
+    when "Game Instructions"
+        puts "Game Instructions:"
+        puts "Party Pokemon"
+        puts "How to Catch a Pokemon"
+    when "Chit Chat"
+        puts "lets chitty chat"
+    else
+        explore
+    end
+end
+
+def oaks_clinic #call the change party pokemon method in here
+end
+
+def poke_center #view all pokemons
+    prompt = TTY::Prompt.new
+    pokemons = Pokemon.all.map {|pokemon| pokemon.name}
+    prompt.enum_select("Pokedex", pokemons, per_page: 6)
+end
+
+def police
+end
+
+def mistys_gym
+    prompt = TTY::Prompt.new
+    choice = prompt.select("What would you like to do?", ["Train my pokemon!", "Talk to Misty", "Go Back"])
+        if choice == "Train my pokemon!"
+            choose_pokemon_to_train
+        elsif choice == "Talk to Misty"
+            prompt.ok("She says hi")
+            mistys_gym
+        else
+            explore
+        end
+    
+end
+
 
 def begin_game
     prompt = TTY::Prompt.new
