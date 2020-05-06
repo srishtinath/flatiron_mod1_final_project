@@ -45,15 +45,15 @@ def find_my_trainer
     end
 end
 
-# def choose_starter
-#     prompt = TTY::Prompt.new
-#     starter = prompt.select("Pick your starter pokemon:", %w(bulbasaur charmander squirtle pikachu))
-#     starter_instance = Pokemon.find_by(name: starter)
-#     new_name = prompt.ask("What would you like to name your new Pokemon?")
-#     CaughtPokemon.create(trainer: $trainer1, pokemon: starter_instance, party: true, name: new_name)
-#     prompt.ok("Congratulations! You just took the first step on your journey to become the greatest Pokemon master!")
-#     starting_menu
-# end
+def choose_starter
+    prompt = TTY::Prompt.new
+    starter = prompt.select("Pick your starter pokemon:", %w(bulbasaur charmander squirtle pikachu))
+    starter_instance = Pokemon.find_by(name: starter)
+    new_name = prompt.ask("What would you like to name your new Pokemon?")
+    CaughtPokemon.create(trainer: $trainer1, pokemon: starter_instance, party: true, name: new_name, level: 1)
+    prompt.ok("Congratulations! You just took the first step on your journey to become the greatest Pokemon master!")
+    starting_menu
+end
 
 # Now, what would you like to do?
     #Explore the town
@@ -143,10 +143,11 @@ end
 def mistys_gym
     prompt = TTY::Prompt.new
     choice = prompt.select("What would you like to do?", ["Train my pokemon!", "Talk to Misty", "Go Back"])
-        if choice == "Train my pokemon"
+        if choice == "Train my pokemon!"
             choose_pokemon_to_train
         elsif choice == "Talk to Misty"
-            puts "She says hi" #build out?
+            prompt.ok("She says hi")
+            mistys_gym
         else
             explore
         end
@@ -333,19 +334,22 @@ def choose_pokemon_to_train
     party_array = party_pokemon($trainer1).map{|poke| poke.name}
     pokepoke = prompt.select("Which pokemon from your party would you like to train?", party_array)
     train_pokemon(pokepoke)
-    if prompt.yes?("Would you like to train another pokemon?")
+    choice = prompt.yes?("Would you like to train another pokemon?")
+    if choice 
         choose_pokemon_to_train
-    else
-        puts "Misty says goodbye and good luck!"
+    else 
+        prompt.ok("Misty says goodbye and good luck!")
         mistys_gym
     end
 end
 
-def train_pokemon(pokemon_name)
+def train_pokemon(pokemon_name) #level up by 1
+    prompt = TTY::Prompt.new
+
     poke = CaughtPokemon.find_by(name: pokemon_name)
-    new_level = poke.level +1
+    new_level = (poke.level) + 1
     poke.update(level: new_level)
-    puts "Congratulations! #{pokemon_name} is now at level #{poke.level}!"
+    prompt.ok("Congratulations! #{pokemon_name} is now at level #{poke.level}!")
 end
 
     play_game
