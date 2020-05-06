@@ -9,8 +9,7 @@ prompt = TTY::Prompt.new
 #Create a new Trainer instance with prompts for name, age, hometown
 
 $trainer1 = Trainer.last
-
-# @@trainer1 = Trainer.first
+$trainer1.update(name: "Srishti", age: 26, hometown: "Pallet town")
 
 def catch_pokemon
     if CaughtPokemon.where(trainer: $trainer1, party: true).count >= 6
@@ -23,9 +22,11 @@ end
 
 def go_for_a_walk
     prompt = TTY::Prompt.new
-    decide = prompt.select("What would you like to do?", ["Go for a walk", "Go Back"])
+    decide = prompt.select("What would you like to do?", ["Go for a walk", "View all my pokemon", "Go Back"])
     if decide == "Go for a walk"
         choose_direction
+    elsif decide == "View all my pokemon"
+        view_all_pokemon
     else
         starting_menu
     end
@@ -94,7 +95,7 @@ end
 
 def pokeball_throw(pokemon)
     prompt = TTY::Prompt.new
-    if $ready_to_be_caught >= 75
+    if $ready_to_be_caught >= 60
         add_to_caught_pokemon(pokemon)
         prompt.ok("#{pokemon.name.capitalize} was caught and added to your party! Congratulations!")
         name = prompt.ask("What would you like to name your new pokemon?")
@@ -118,12 +119,29 @@ def post_catch_actions
     if action == "Catch more pokemon"
         choose_direction
     elsif action == "View my pokemon"
-        Trainer.view_pokemon
+        view_all_pokemon
     else
         go_for_a_walk
     end
 end
 
 #view pokemon methods
+def view_all_pokemon
+    prompt = TTY::Prompt.new
+    action = prompt.select("What would you like to view?", ["View all pokemon", "View party pokemon", "View pokemon in storage", "Go Back"])
+    if action == "View all pokemon"
+        $trainer1.view_pokemon
+        view_all_pokemon
+    elsif action == "View party pokemon"
+        $trainer1.view_party_pokemon
+        view_all_pokemon
+    elsif action == "View pokemon in storage"
+        $trainer1.view_storage_pokemon
+        view_all_pokemon
+    else
+        post_catch_actions
+    end
+end
 
 catch_pokemon
+

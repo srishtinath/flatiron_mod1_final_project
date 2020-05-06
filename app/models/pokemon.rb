@@ -5,7 +5,8 @@ class Pokemon < ActiveRecord::Base
     has_many :trainers, through: :caught_pokemons
 
     def self.random_pokemon_generator
-        pokemon_generated = Pokemon.find_by(id:rand(150))
+        number = Pokemon.count
+        pokemon_generated = Pokemon.find_by(id:rand(number))
         puts "A wild #{pokemon_generated.name} appeared!"
         pokemon_generated
     end
