@@ -24,6 +24,7 @@ def find_my_trainer
     age = prompt.ask('How old are you?', required: true) #need to limit input to an int
     trainer_found = Trainer.find_by(name: name, age: age)
     if trainer_found
+        $trainer1 = trainer_found
         prompt.ok("Welcome back #{name}!")
         starting_menu
     else
@@ -38,9 +39,10 @@ def choose_starter
     system "clear"
     display_starters
     starter = prompt.select("Pick your starter pokemon:", %w(Bulbasaur Charmander Squirtle Pikachu))
-    starter_instance = Pokemon.find_by(name: starter)
+    starter_instance = Pokemon.find_by(name: starter.downcase)
     new_name = prompt.ask("What would you like to name your new Pokemon?")
-    CaughtPokemon.create(pokemon: starter_instance, party: true, name: new_name)
+    CaughtPokemon.create(pokemon: starter_instance, party: true, name: new_name, trainer: $trainer1)
+
     prompt.ok("Congratulations! You just took the first step on your journey to become the greatest Pokemon master!")
     starting_menu
 end
@@ -132,6 +134,8 @@ def poke_center #view all pokemons
     prompt.say("Name: #{poke}")
     prompt.say("XP: #{pokemon.xp}")
     starting_menu
+
+    ###kyle add picture here
 end
 
 
