@@ -8,7 +8,7 @@ prompt = TTY::Prompt.new
 # Create Trainer
 #Create a new Trainer instance with prompts for name, age, hometown
 
-$trainer1 = Trainer.last
+$trainer1 = Trainer.create(name: "Srishti", age: 26, hometown: "Pallet")
 
 
 
@@ -99,10 +99,10 @@ end
 def pokeball_throw(pokemon)
     prompt = TTY::Prompt.new
     if $ready_to_be_caught >= 60
-        add_to_caught_pokemon(pokemon)
+        new_instance = add_to_caught_pokemon(pokemon)
         prompt.ok("#{pokemon.name.capitalize} was caught and added to your party! Congratulations!")
         name = prompt.ask("What would you like to name your new pokemon?")
-        pokemon.update(name: name)
+        new_instance.update(name: name)
         prompt.ok("#{name} was added to your party!")
         post_catch_actions
     else
@@ -118,11 +118,13 @@ end
 
 def post_catch_actions
     prompt = TTY::Prompt.new
-    action = prompt.select("What would you like to do?", ["Catch more pokemon", "View my pokemon", "Go Back"])
+    action = prompt.select("What would you like to do?", ["Catch more pokemon", "View my pokemon", "Go Back", "Exit Game"])
     if action == "Catch more pokemon"
         choose_direction
     elsif action == "View my pokemon"
         view_all_pokemon
+    elsif action == "Exit Game"
+        abort("Game ended!")
     else
         go_for_a_walk
     end

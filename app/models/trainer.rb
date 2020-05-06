@@ -10,7 +10,8 @@ class Trainer < ActiveRecord::Base
 
     #View all pokemon belonging to trainer
     def view_pokemon
-        array = CaughtPokemon.select(:name).where(trainer: self)
+        array = CaughtPokemon.where(trainer: self)
+        binding.pry
         array.each {|pokemon| puts pokemon.name}
     end
 
