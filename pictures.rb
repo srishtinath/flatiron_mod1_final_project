@@ -91,11 +91,11 @@ def scroll_through_pokemon(pokemon)
 end
 
 def display_starters
-    bulb = download_image(Pokemon.find_by(name:"bulbasaur"))
-    char = download_image(Pokemon.find_by(name:"charmander"))
-    squirt = download_image(Pokemon.find_by(name:"squirtle"))
-    pika = download_image(Pokemon.find_by(name:"pikachu"))
-
+    bulb = 'assets/bulbasaur.png'
+    char = 'assets/charmander.png'
+    squirt = 'assets/squirtle.png'
+    pika = 'assets/pikachu.png'
+    scroll_through_pokemon([bulb,char,squirt,pika])
     display_pokemon([bulb,char,squirt,pika],"row")
 end
 

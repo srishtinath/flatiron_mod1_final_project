@@ -50,6 +50,8 @@ end
 
 def choose_starter
     prompt = TTY::Prompt.new
+    system "clear"
+    display_starters
     starter = prompt.select("Pick your starter pokemon:", %w(Bulbasaur Charmander Squirtle Pikachu))
     starter_instance = Pokemon.find_by(name: starter)
     new_name = prompt.ask("What would you like to name your new Pokemon?")
@@ -129,6 +131,8 @@ end
 
 def play_game
     prompt = TTY::Prompt.new
+    system "clear"
+    print_pic("assets/poketerm_logo.png")
     prompt.say("Welcome to Pokemon World!!!")
     prompt.keypress("Press enter to continue", keys: [:return])
     begin_game
