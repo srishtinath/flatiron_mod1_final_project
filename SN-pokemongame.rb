@@ -8,12 +8,15 @@ prompt = TTY::Prompt.new
 # Create Trainer
 #Create a new Trainer instance with prompts for name, age, hometown
 
-@@trainer1 = Trainer.last
+$trainer1 = Trainer.last
+
+
+
 
 # @@trainer1 = Trainer.first
 
 def catch_pokemon
-    if CaughtPokemon.where(trainer: @@trainer1, party: true).count >= 6
+    if CaughtPokemon.where(trainer: $trainer1, party: true).count >= 6
         puts "Sorry, you can only catch more pokemon if you have less than 6 pokemon in your party. Please store some with Professor Oak first."
     else
         go_for_a_walk     
