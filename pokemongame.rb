@@ -100,6 +100,6 @@ def explore
 end
 
 
-trainer_creation
-starter_pokemon
+# trainer_creation
+# starter_pokemon
 starting_menu
