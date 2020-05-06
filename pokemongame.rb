@@ -11,7 +11,7 @@ prompt = TTY::Prompt.new
 # end
 # puts ans
 
-@@trainer1 = Trainer.last
+$trainer1 = Trainer.last
 
 
 
@@ -28,7 +28,7 @@ def trainer_creation
     age = prompt.ask('How old are you?', required: true) #need to limit input to an int
     hometown = prompt.ask('Where are you from?', required: true)
     prompt.ok("Trainer succesfully created. Enjoy the game, #{name}!!!")
-    @@trainer1 = Trainer.create(name: name, age: age, hometown: hometown)
+    $trainer1 = Trainer.create(name: name, age: age, hometown: hometown)
 end
 
 
