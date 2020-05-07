@@ -103,3 +103,13 @@ def get_starters(res)
         pika = "assets/#{res}/pikachu.png"
     ]
 end
+
+def get_paths(pokeObject)
+    urlArray = pokeObject.map do |i|
+        download_image(i)
+    end
+end
+
+def say_hi
+    puts hi
+end
