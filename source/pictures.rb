@@ -35,6 +35,16 @@ def display_two(item1,item2)
     print_pic('temp/combine.png').display
 end
 
+def display_one(pokemon)
+    portrait = Magick::ImageList.new(
+        download_image(pokemon,true))
+        .resize_to_fit(60,60)
+        .crop(-50,-50,120,120)
+    portrait.write('temp/combine.png')
+    print_pic('temp/combine.png').display
+
+end
+
 def display_trainer_and_pokemon(trainer,pokemon)
     left = Magick::ImageList.new(
         download_image(trainer,false))
@@ -60,20 +70,35 @@ def display_pokemon(pokemon,format,options = {:x=>20,:y=>20,:width=>50,:height=>
     end
     image_list = Magick::ImageList.new()
     count = (pokemon.length.to_f/2).ceil()
-    count.times do |i|
-        index = i*2
-        Magick::ImageList.new(pokemon[index])
+    if pokemon.length == 1
+        Magick::ImageList.new(pokemon[0])
         .crop(options[:x],options[:y],options[:width],options[:height])
         .resize_to_fit(options[:resizeHeightWidth],options[:resizeHeightWidth])
-        .write("temp/#{i}-1.png")
-        Magick::ImageList.new(pokemon[index+1])
-        .crop(options[:x],options[:y],options[:width],options[:height])
-        .resize_to_fit(options[:resizeHeightWidth],options[:resizeHeightWidth])
-        .write("temp/#{i}-2.png")
-        Magick::ImageList.new("temp/#{i}-1.png","temp/#{i}-2.png")
-            .append(grid)
-            .write("temp/#{i}-1and2.png")
-        image_list.concat(Magick::Image.read("temp/#{i}-1and2.png"))
+        .write("temp/0-1.png")
+        image_list.concat(Magick::Image.read("temp/0-1.png"))
+    else    
+        count.times do |i|
+            index = i*2
+            Magick::ImageList.new(pokemon[index])
+                .crop(options[:x],options[:y],options[:width],options[:height])
+                .resize_to_fit(options[:resizeHeightWidth],options[:resizeHeightWidth])
+                .write("temp/#{i}-1.png")
+                if(pokemon[index+1])
+                    Magick::ImageList.new(pokemon[index+1])
+                        .crop(options[:x],options[:y],options[:width],options[:height])
+                        .resize_to_fit(options[:resizeHeightWidth],options[:resizeHeightWidth])
+                        .write("temp/#{i}-2.png")
+                else
+                    Magick::ImageList.new("assets/black.png")
+                    .crop(options[:x],options[:y],options[:width],options[:height])
+                    .resize_to_fit(options[:resizeHeightWidth],options[:resizeHeightWidth])
+                    .write("temp/#{i}-2.png")                    
+                end
+                Magick::ImageList.new("temp/#{i}-1.png","temp/#{i}-2.png")
+                .append(grid)
+                .write("temp/#{i}-1and2.png")
+            image_list.concat(Magick::Image.read("temp/#{i}-1and2.png"))
+        end
     end
     image_list.append(false).write('temp/combine.png')
     print_pic('temp/combine.png').display
@@ -100,16 +125,23 @@ def get_starters(res)
         bulb = "assets/#{res}/bulbasaur.png",
         char = "assets/#{res}/charmander.png",
         squirt = "assets/#{res}/squirtle.png",
-        pika = "assets/#{res}/pikachu.png"
+        pika = "assets/#{res}/pikachu.png",
     ]
 end
 
-def get_paths(pokeObject)
-    urlArray = pokeObject.map do |i|
-        download_image(i)
+def get_pokemon_from_caught(pokeCaughtObj)
+    pokeArray = []
+    pokeCaughtObj.each do |i|
+        pokeArray<<(i.pokemon)
     end
+    pokeArray
 end
 
-def say_hi
-    puts hi
+def view_caught_pokemon(caughtPokemon)
+    urls = []
+    pokemon = get_pokemon_from_caught(caughtPokemon)
+    pokemon.length.times do |i|
+        urls<<download_image(pokemon[i])
+    end
+    display_pokemon(urls,'grid')
 end

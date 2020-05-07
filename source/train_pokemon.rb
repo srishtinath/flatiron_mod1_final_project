@@ -32,6 +32,7 @@ def train_pokemon(pokemon_name) #level up by 1
     prompt = TTY::Prompt.new
     poke = CaughtPokemon.find_by(poke_name: pokemon_name)
     new_level = ((poke.level) + 1)
+    display_trainer_and_pokemon(poke.trainer,pokemon.pokemon)
     poke.update(level: new_level)
     sleep(1)
     print TTY::Box.success("Congratulations! #{pokemon_name} is now at level #{poke.level}!")

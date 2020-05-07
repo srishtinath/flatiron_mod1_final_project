@@ -10,6 +10,7 @@ def mistys_gym
             system "clear"
             choose_pokemon_to_train
         elsif choice == "Talk to Misty"
+            print_pic('assets/mistytop.png')
             print TTY::Box.frame "Welcome to my gym #{$trainer1.name}! You can train your pokemon to be better here!", align: :center, title: {top_left: "Misty"}
             sleep(2)
             system "clear"
