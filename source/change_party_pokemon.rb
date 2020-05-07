@@ -25,7 +25,6 @@ end
 def remove_pokemon_from_party
     prompt = TTY::Prompt.new
     party_array = party_pokemon($trainer1).map{|poke| poke.poke_name}
-    binding.pry
     if !party_array.empty?
         pokepoke = prompt.select("Which pokemon would you like to remove from your party?", party_array)
         chosen_one = CaughtPokemon.find_by(poke_name: pokepoke, trainer: $trainer1)
@@ -41,20 +40,23 @@ end
 
 def add_pokemon_to_party
     prompt = TTY::Prompt.new
-    if $trainer1.party_full?
-        binding.pry
-        puts "Your party is full. Please move some to storage first."
-        change_party_pokemon
-    else
-        non_party_array = non_party_pokemon($trainer1).map{|poke| poke.poke_name}
-        binding.pry
-        pokepoke = prompt.select("Which pokemon would you like to remove from your party?", non_party_array)
+    non_party_array = non_party_pokemon($trainer1).map{|poke| poke.poke_name}
+    party_array = party_pokemon($trainer1).map{|poke| poke.poke_name}
+    if non_party_array.empty?
+        puts "You have no pokemon in storage to add to your party!"
+    elsif !party_array.empty? || party_array.size<6
+        pokepoke = prompt.select("Which pokemon would you like to add to your party?", non_party_array)
         chosen_one = CaughtPokemon.find_by(poke_name: pokepoke, trainer: $trainer1)
         chosen_one.update(party: true)
-        puts "#{chosen_one.poke_name} has been moved to storage!"
-        add_pokemon_to_party
+        puts "#{chosen_one.poke_name} has been added to your party!"
+    else
+        puts "Your party is full. Please move some to storage first."
     end
+    change_party_pokemon
 end
+
+
+
 
 def change_pokemon_name
     prompt = TTY::Prompt.new
