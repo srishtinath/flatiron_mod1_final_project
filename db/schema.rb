@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_06_163935) do
+ActiveRecord::Schema.define(version: 2020_05_07_150753) do
 
   create_table "caught_pokemons", force: :cascade do |t|
     t.integer "pokemon_id"
     t.integer "trainer_id"
-    t.string "name"
+    t.string "poke_name"
     t.integer "level"
     t.boolean "party"
   end

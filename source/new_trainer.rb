@@ -19,7 +19,7 @@ def choose_starter
     starter = prompt.select("Pick your starter pokemon:", %w(Bulbasaur Charmander Squirtle Pikachu))
     starter_instance = Pokemon.find_by(name: starter.downcase)
     new_name = prompt.ask("What would you like to name your new Pokemon?")
-    CaughtPokemon.create(pokemon: starter_instance, party: true, name: new_name, level: 1, trainer: $trainer1)
+    CaughtPokemon.create(pokemon: starter_instance, party: true, poke_name: new_name, level: 1, trainer: $trainer1)
     print TTY::Box.success("Congratulations! You just took the first step on your journey to become the greatest Pokemon master!")
     starting_menu
 end

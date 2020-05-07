@@ -13,7 +13,7 @@ class Trainer < ActiveRecord::Base
     def view_pokemon
         array = CaughtPokemon.where(trainer: self)
         if array.count != 0
-            array.each {|pokemon| puts "#{pokemon.name}, (#{pokemon.pokemon.name.capitalize})"}
+            array.each {|pokemon| puts "#{pokemon.poke_name}, (#{pokemon.pokemon.name.capitalize})"}
         else
             puts "You haven't caught any pokemon! Try catching some pokemon on your walk!"
         end
@@ -22,7 +22,7 @@ class Trainer < ActiveRecord::Base
     def view_party_pokemon
         array = CaughtPokemon.where(trainer: self, party:true)
         if array.count != 0
-            array.each {|pokemon| puts "#{pokemon.name}, (#{pokemon.pokemon.name.capitalize})"}
+            array.each {|pokemon| puts "#{pokemon.poke_name}, (#{pokemon.pokemon.name.capitalize})"}
         else
             puts "You don't have any pokemon in your party!"
         end
@@ -31,7 +31,7 @@ class Trainer < ActiveRecord::Base
     def view_storage_pokemon
         array = CaughtPokemon.where(trainer: self, party:false)
         if array.count != 0
-            array.each {|pokemon| puts "#{pokemon.name}, (#{pokemon.pokemon.name.capitalize})"}
+            array.each {|pokemon| puts "#{pokemon.poke_name}, (#{pokemon.pokemon.name.capitalize})"}
         else
             puts "You don't have any pokemon in storage!"
         end
@@ -39,7 +39,11 @@ class Trainer < ActiveRecord::Base
 
 
     def party_full?
-        view_party_pokemon.size == 6 ? true : false
+        if !view_party_pokemon.empty?
+            CaughtPokemon.where(trainer: self, party:true).size == 6 ? true : false
+        else
+            false
+        end
     end
 
 end

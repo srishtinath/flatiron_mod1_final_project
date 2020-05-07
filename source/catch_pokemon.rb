@@ -83,7 +83,7 @@ def pokeball_throw(pokemon)
         new_instance = add_to_caught_pokemon(pokemon)
         print TTY::Box.success("#{pokemon.name.capitalize} was caught and added to your party! Congratulations!")
         name = prompt.ask("What would you like to name your new pokemon?")
-        new_instance.update(name: name)
+        new_instance.update(poke_name: name)
         print TTY::Box.success("#{name} was added to your party!")
         post_catch_actions
     else
