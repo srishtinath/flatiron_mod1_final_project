@@ -12,5 +12,7 @@ gem 'rmagick'
 gem 'down'
 gem 'catpix'
 
-
+gem 'tty-box'
+gem 'tty-font'
+gem 'pastel'
 gem 'tty-prompt'

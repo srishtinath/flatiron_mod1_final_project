@@ -1,14 +1,15 @@
 # file for CLI commands
 require_relative 'config/environment.rb'
 
-prompt = TTY::Prompt.new
 
 
 def play_game
     prompt = TTY::Prompt.new
+    font = TTY::Font.new(:doom)
+    pastel = Pastel.new
     system "clear"
     print_pic("assets/poketerm_logo.png")
-    prompt.say("Welcome to Pokemon World!!!")
+    puts pastel.red.bold.italic(font.write("Welcome  to  Pokemon  World !!!", letter_spacing: 2))
     prompt.keypress("Press enter to continue", keys: [:return])
     begin_game
 end
@@ -19,6 +20,7 @@ def begin_game
     case choice
     when "Start a new game!"
         trainer_creation
+        sleep(3)
         choose_starter
     when "Continue your game!"
         find_my_trainer

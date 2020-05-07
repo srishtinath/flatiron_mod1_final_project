@@ -1,7 +1,6 @@
 require_relative '../config/environment.rb'
 prompt = TTY::Prompt.new
 
-
 def oaks_clinic #call the change party pokemon method in here
     ## add picture of oaks clinic
     prompt = TTY::Prompt.new

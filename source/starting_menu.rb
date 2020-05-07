@@ -16,4 +16,5 @@ def starting_menu
     else
         abort("Game ended!")
     end
+
 end
