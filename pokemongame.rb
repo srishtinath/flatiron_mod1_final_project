@@ -8,7 +8,7 @@ def play_game
     pastel = Pastel.new
     system "clear"
     print_pic("assets/poketerm_logo.png")
-    puts pastel.red.bold.italic(font.write("Welcome  to  Pokemon  World !!!", letter_spacing: 2))
+    puts pastel.red.bold.italic(font.write("Pokemon  World !!!", letter_spacing: 2))
     prompt.keypress("Press enter to continue", keys: [:return])
     begin_game
 end
@@ -18,8 +18,8 @@ def begin_game
     choice = prompt.select("", ["Start a new game!", "Continue your game!", "Exit"], active_color: :cyan)
     case choice
     when "Start a new game!"
+        system "clear"
         trainer_creation
-        sleep(3)
         choose_starter
     when "Continue your game!"
         system "clear"

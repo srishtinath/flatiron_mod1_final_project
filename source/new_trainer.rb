@@ -11,7 +11,7 @@ def trainer_creation
     sleep(0.5)
     print TTY::Box.success("Trainer succesfully created. Enjoy the game, #{name}!!!", padding: 1, align: :center)
     $trainer1 = Trainer.create(name: name, age: age, hometown: hometown)
-    sleep(1)
+    sleep(2)
     system "clear"
 end
 
@@ -19,10 +19,15 @@ def choose_starter
     prompt = TTY::Prompt.new
     system "clear"
     display_starters
-    starter = prompt.select("Pick your starter pokemon:", %w(Bulbasaur Charmander Squirtle Pikachu))
+    sleep(1)
+    system "clear"
+    print TTY::Box.frame "Please select your starter pokemon!", padding: 1, align: :center
+    starter = prompt.select("", %w(Bulbasaur Charmander Squirtle Pikachu))
     starter_instance = Pokemon.find_by(name: starter.downcase)
     new_name = prompt.ask("What would you like to name your new Pokemon?")
     CaughtPokemon.create(pokemon: starter_instance, party: true, poke_name: new_name, level: 1, trainer: $trainer1)
     print TTY::Box.success("Congratulations! You just took the first step on your journey to become the greatest Pokemon master!")
+    sleep(2)
+    system "clear"
     starting_menu
 end
