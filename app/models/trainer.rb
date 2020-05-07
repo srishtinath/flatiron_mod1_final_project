@@ -8,13 +8,6 @@ class Trainer < ActiveRecord::Base
         self.update(back_img_url: 'https://i.imgur.com/YzPr8WH.png')
         
     end
-    
-
-    def change_pokemon_name(pokemon, name)
-        poke = CaughtPokemon.find_by(id: pokemon.id, trainer: self)
-        poke.update(name: name)
-        puts "Your pokemon's name has been updated to #{name}!"
-    end
 
     #View all pokemon belonging to trainer
     def view_pokemon
@@ -44,35 +37,9 @@ class Trainer < ActiveRecord::Base
         end
     end
 
-    def remove_pokemon_from_party(pokemon)
-        poke = CaughtPokemon.find_by(pokemon: pokemon, trainer: self)
-        poke.update(party:false)
-        left_in_party = 6 - view_party_pokemon.count
-        puts "You now have #{left_in_party} spots left in your party!"
-    end
 
     def party_full?
-        view_party_pokemon.count == 6 ? true : false
-    end
-
-    def add_pokemon_to_party(pokemon)
-        if party_full?
-            puts "You cannot have more than 6 pokemon in your party. First move some to Professor Oak's clinic before adding Pokemon to your party."
-        else
-            pokemon.update(party:true)
-            puts "You have now added #{pokemon.name} to your party!"
-        end
-    end
-
-    def move_pokemon_to_storage(pokemon)
-        pokemon.party = false
-        puts "You have now put #{pokemon.name} in storage!"
-    end
-    
-    #release into wild
-    def release(pokemon)
-        poke = CaughtPokemon.find_by(pokemon.id)
-        poke.update(trainer_id: nil)
+        view_party_pokemon.size == 6 ? true : false
     end
 
 end

@@ -1,4 +1,3 @@
-require_relative '../pictures.rb'
 require "bundler/setup"
 Bundler.require
 require "sinatra/activerecord"

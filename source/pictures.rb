@@ -1,4 +1,4 @@
-require_relative 'config/environment.rb'
+require_relative '../config/environment.rb'
 def download_image(pokemon,front=true)
     front ? f_or_b = pokemon.front_img_url : f_or_b = pokemon.back_img_url
     temp = Down.download(f_or_b)

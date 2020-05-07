@@ -1,4 +1,4 @@
-require_relative 'config/environment.rb'
+require_relative '../config/environment.rb'
 require 'pry'
 
 ##This file is used for filling Pokemon table

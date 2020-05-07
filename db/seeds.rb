@@ -1,4 +1,4 @@
-require_relative '../pokeApi.rb'
+require_relative '../config/environment.rb'
 
 Trainer.delete_all
 CaughtPokemon.delete_all
