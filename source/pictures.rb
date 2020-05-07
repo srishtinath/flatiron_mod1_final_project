@@ -60,13 +60,13 @@ def display_pokemon(pokemon,format,options = {:x=>20,:y=>20,:width=>50,:height=>
     end
     image_list = Magick::ImageList.new()
     count = (pokemon.length.to_f/2).ceil()
-    # if pokemon.length == 1
-    #     Magick::ImageList.new(pokemon[0])
-    #     .crop(options[:x],options[:y],options[:width],options[:height])
-    #     .resize_to_fit(options[:resizeHeightWidth],options[:resizeHeightWidth])
-    #     .write("temp/0-1.png")
-    #     image_list.concat(Magick::Image.read("temp/0-1.png"))
-    # else    
+    if pokemon.length == 1
+        Magick::ImageList.new(pokemon[0])
+        .crop(options[:x],options[:y],options[:width],options[:height])
+        .resize_to_fit(options[:resizeHeightWidth],options[:resizeHeightWidth])
+        .write("temp/0-1.png")
+        image_list.concat(Magick::Image.read("temp/0-1.png"))
+    else    
         count.times do |i|
             index = i*2
             Magick::ImageList.new(pokemon[index])
