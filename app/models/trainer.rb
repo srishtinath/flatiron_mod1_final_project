@@ -13,6 +13,7 @@ class Trainer < ActiveRecord::Base
     #View all pokemon belonging to trainer
     def view_pokemon
         array = CaughtPokemon.where(trainer: self)
+        system "clear"
         view_caught_pokemon(array)
         if array.count != 0
             array.each {|pokemon| puts "#{pokemon.poke_name}, (#{pokemon.pokemon.name.capitalize})"}
@@ -23,6 +24,7 @@ class Trainer < ActiveRecord::Base
 
     def view_party_pokemon
         array = CaughtPokemon.where(trainer: self, party:true)
+        system "clear"
         view_caught_pokemon(array)
         if array.count != 0
             array.each {|pokemon| puts "#{pokemon.poke_name}, (#{pokemon.pokemon.name.capitalize})"}
@@ -34,6 +36,7 @@ class Trainer < ActiveRecord::Base
     def view_storage_pokemon
         array = CaughtPokemon.where(trainer: self, party:false)
         if array.count != 0
+            system "clear"
             view_caught_pokemon(array)
             array.each {|pokemon| puts "#{pokemon.poke_name}, (#{pokemon.pokemon.name.capitalize})"}
         else

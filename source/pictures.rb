@@ -37,9 +37,12 @@ end
 
 def display_one(pokemon)
     portrait = Magick::ImageList.new(
-        download_image(pokemon,false))
-        .resize_to_fit(40,40)
-        .crop(0,-10,100,100)
+        download_image(pokemon,true))
+        .resize_to_fit(60,60)
+        .crop(-50,-50,120,120)
+    portrait.write('temp/combine.png')
+    print_pic('temp/combine.png').display
+
 end
 
 def display_trainer_and_pokemon(trainer,pokemon)
@@ -140,6 +143,5 @@ def view_caught_pokemon(caughtPokemon)
     pokemon.length.times do |i|
         urls<<download_image(pokemon[i])
     end
-    puts urls
     display_pokemon(urls,'grid')
 end
