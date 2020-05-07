@@ -3,7 +3,10 @@ prompt = TTY::Prompt.new
 
 
 def catch_pokemon
-    if CaughtPokemon.where(trainer: $trainer1, party: true).count >= 6
+    if CaughtPokemon.where(trainer:$trainer1).size == 10
+        win_game
+        starting_menu
+    elsif CaughtPokemon.where(trainer: $trainer1, party: true).count >= 6
         puts "Sorry, you can only catch more pokemon if you have less than 6 pokemon in your party. Please store some with Professor Oak first."
         starting_menu
     else
@@ -102,6 +105,7 @@ def post_catch_actions
     prompt = TTY::Prompt.new
     if CaughtPokemon.where(trainer:$trainer1).size == 10
         win_game
+        starting_menu
     else
         action = prompt.select("What would you like to do?", ["Catch more pokemon", "View my pokemon", "Go Back", "Exit Game"])
         if action == "Catch more pokemon"
