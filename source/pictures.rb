@@ -95,10 +95,8 @@ def display_pokemon(pokemon,format,options = {:x=>20,:y=>20,:width=>50,:height=>
                 .append(grid)
                 .write("temp/#{i}-1and2.png")
             image_list.concat(Magick::Image.read("temp/#{i}-1and2.png"))
-            puts i
         end
     end
-        puts 'made it to here!'
     image_list.append(false).write('temp/combine.png')
     print_pic('temp/combine.png').display
 end
