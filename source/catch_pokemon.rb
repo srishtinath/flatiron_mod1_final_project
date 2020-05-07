@@ -3,7 +3,10 @@ prompt = TTY::Prompt.new
 
 
 def catch_pokemon
-    if CaughtPokemon.where(trainer: $trainer1, party: true).count >= 6
+    if CaughtPokemon.where(trainer:$trainer1).size == 10
+        win_game
+        starting_menu
+    elsif CaughtPokemon.where(trainer: $trainer1, party: true).count >= 6
         puts "Sorry, you can only catch more pokemon if you have less than 6 pokemon in your party. Please store some with Professor Oak first."
         starting_menu
     else
@@ -82,8 +85,8 @@ def pokeball_throw(pokemon)
     if $ready_to_be_caught >= 70
         new_instance = add_to_caught_pokemon(pokemon)
         print TTY::Box.success("#{pokemon.name.capitalize} was caught and added to your party! Congratulations!")
-        name = prompt.ask("What would you like to name your new pokemon?")
-        new_instance.update(name: name)
+        name = prompt.ask("What would you like to name your new pokemon?", required:true)
+        new_instance.update(poke_name: name)
         print TTY::Box.success("#{name} was added to your party!")
         post_catch_actions
     else
@@ -100,18 +103,24 @@ end
 
 def post_catch_actions
     prompt = TTY::Prompt.new
-    action = prompt.select("What would you like to do?", ["Catch more pokemon", "View my pokemon", "Go Back", "Exit Game"])
-    if action == "Catch more pokemon"
-        if CaughtPokemon.where(trainer: $trainer1, party: true).count >= 6
-            puts "Your party is full! Please put some in storage with Professor Oak before catching more pokemon!"
-        else 
-            choose_direction
-        end
-    elsif action == "View my pokemon"
-        view_all_pokemon
-    elsif action == "Exit Game"
-        abort("Game ended!")
+    if CaughtPokemon.where(trainer:$trainer1).size == 10
+        win_game
+        starting_menu
     else
-        go_for_a_walk
+        action = prompt.select("What would you like to do?", ["Catch more pokemon", "View my pokemon", "Go Back", "Exit Game"])
+        if action == "Catch more pokemon"
+            if CaughtPokemon.where(trainer: $trainer1, party: true).count >= 6
+                puts "Your party is full! Please put some in storage with Professor Oak before catching more pokemon!"
+                starting_menu
+            else 
+                choose_direction
+            end
+        elsif action == "View my pokemon"
+            view_all_pokemon
+        elsif action == "Exit Game"
+            abort("Game ended!")
+        else
+            go_for_a_walk
+        end
     end
 end

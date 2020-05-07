@@ -6,6 +6,10 @@ def party_pokemon(trainer)
     CaughtPokemon.where(trainer: trainer, party: true)
 end
 
+def non_party_pokemon(trainer)
+    CaughtPokemon.where(trainer: trainer, party: false)
+end
+
 def view_all_pokemon
     prompt = TTY::Prompt.new
     action = prompt.select("What would you like to view?", ["View all pokemon", "View party pokemon", "View pokemon in storage", "Go Back"])
