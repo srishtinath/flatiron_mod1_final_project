@@ -1,3 +1,4 @@
+require_relative './../../source/pictures.rb'
 class Trainer < ActiveRecord::Base
     has_many :caught_pokemons
     has_many :pokemons, through: :caught_pokemons
@@ -21,6 +22,7 @@ class Trainer < ActiveRecord::Base
 
     def view_party_pokemon
         array = CaughtPokemon.where(trainer: self, party:true)
+        view_caught_pokemon(array)
         if array.count != 0
             array.each {|pokemon| puts "#{pokemon.poke_name}, (#{pokemon.pokemon.name.capitalize})"}
         else
