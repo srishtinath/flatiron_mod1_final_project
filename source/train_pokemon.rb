@@ -5,14 +5,19 @@ prompt = TTY::Prompt.new
 def choose_pokemon_to_train
     prompt = TTY::Prompt.new
     party_array = party_pokemon($trainer1).map{|poke| poke.poke_name}
-    pokepoke = prompt.select("Which pokemon from your party would you like to train?", party_array)
-    train_pokemon(pokepoke)
-    choice = prompt.yes?("Would you like to train another pokemon?")
-    if choice 
-        choose_pokemon_to_train
-    else 
-        prompt.ok("Misty says goodbye and good luck!")
-        mistys_gym
+    if party_array.empty?
+        puts "You don't have any pokemon in your party!"
+        explore
+    else
+        pokepoke = prompt.select("Which pokemon from your party would you like to train?", party_array)
+        train_pokemon(pokepoke)
+        choice = prompt.yes?("Would you like to train another pokemon?")
+        if choice 
+            choose_pokemon_to_train
+        else 
+            prompt.ok("Misty says goodbye and good luck!")
+            mistys_gym
+        end
     end
 end
 

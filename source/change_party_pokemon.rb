@@ -72,14 +72,19 @@ end
 def release_pokemon
     prompt = TTY::Prompt.new
     party_array = CaughtPokemon.where(trainer:$trainer1).map{|poke| poke.poke_name}
-    pokepoke = prompt.select("Which pokemon would you like to release into the wild unknown?", party_array)
-    sure = prompt.yes?("Are you sure you want to release #{pokepoke}?")
-    if sure
-        poke_to_release = CaughtPokemon.find_by(poke_name: pokepoke, trainer: $trainer1)
-        poke_to_release.update(trainer: nil)
-        puts "#{poke_to_release.poke_name} has been released into the wild! They will miss you and all the adventures you've had together!"
-        change_party_pokemon
+    if party_array.empty?
+        puts "You don't have any pokemon!"
+        oaks_clinic
     else
-        change_party_pokemon
+        pokepoke = prompt.select("Which pokemon would you like to release into the wild unknown?", party_array)
+        sure = prompt.yes?("Are you sure you want to release #{pokepoke}?")
+        if sure
+            poke_to_release = CaughtPokemon.find_by(poke_name: pokepoke, trainer: $trainer1)
+            poke_to_release.update(trainer: nil)
+            puts "#{poke_to_release.poke_name} has been released into the wild! They will miss you and all the adventures you've had together!"
+            change_party_pokemon
+        else
+            change_party_pokemon
+        end
     end
 end

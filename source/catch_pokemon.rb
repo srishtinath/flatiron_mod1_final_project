@@ -82,7 +82,7 @@ def pokeball_throw(pokemon)
     if $ready_to_be_caught >= 70
         new_instance = add_to_caught_pokemon(pokemon)
         print TTY::Box.success("#{pokemon.name.capitalize} was caught and added to your party! Congratulations!")
-        name = prompt.ask("What would you like to name your new pokemon?")
+        name = prompt.ask("What would you like to name your new pokemon?", required:true)
         new_instance.update(poke_name: name)
         print TTY::Box.success("#{name} was added to your party!")
         post_catch_actions
@@ -104,6 +104,7 @@ def post_catch_actions
     if action == "Catch more pokemon"
         if CaughtPokemon.where(trainer: $trainer1, party: true).count >= 6
             puts "Your party is full! Please put some in storage with Professor Oak before catching more pokemon!"
+            starting_menu
         else 
             choose_direction
         end
