@@ -35,6 +35,13 @@ def display_two(item1,item2)
     print_pic('temp/combine.png').display
 end
 
+def display_one(pokemon)
+    portrait = Magick::ImageList.new(
+        download_image(pokemon,false))
+        .resize_to_fit(40,40)
+        .crop(0,-10,100,100)
+end
+
 def display_trainer_and_pokemon(trainer,pokemon)
     left = Magick::ImageList.new(
         download_image(trainer,false))
@@ -90,7 +97,7 @@ def display_pokemon(pokemon,format,options = {:x=>20,:y=>20,:width=>50,:height=>
             image_list.concat(Magick::Image.read("temp/#{i}-1and2.png"))
             puts i
         end
-        # end
+    end
         puts 'made it to here!'
     image_list.append(false).write('temp/combine.png')
     print_pic('temp/combine.png').display
