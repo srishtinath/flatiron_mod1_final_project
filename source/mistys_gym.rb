@@ -8,7 +8,7 @@ def mistys_gym
         if choice == "Train my pokemon!"
             choose_pokemon_to_train
         elsif choice == "Talk to Misty"
-            prompt.ok("She says hi")
+            prompt.ok("Welcome to my gym #{$trainer1.name}! You can train your pokemon to be better here!")
             mistys_gym
         else
             explore

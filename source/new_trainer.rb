@@ -6,7 +6,7 @@ def trainer_creation
     prompt = TTY::Prompt.new
     print TTY::Box.frame "Please enter your account information:", padding: 1, align: :center
     name = prompt.ask('What is your name?', required: true)
-    age = prompt.ask('How old are you?', required: true) #need to limit input to an int
+    age = prompt.ask('How old are you?', required: true)
     hometown = prompt.ask('Where are you from?', required: true)
     print TTY::Box.success("Trainer succesfully created. Enjoy the game, #{name}!!!", padding: 1, align: :center)
     $trainer1 = Trainer.create(name: name, age: age, hometown: hometown)

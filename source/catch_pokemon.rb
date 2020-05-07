@@ -5,6 +5,7 @@ prompt = TTY::Prompt.new
 def catch_pokemon
     if CaughtPokemon.where(trainer: $trainer1, party: true).count >= 6
         puts "Sorry, you can only catch more pokemon if you have less than 6 pokemon in your party. Please store some with Professor Oak first."
+        starting_menu
     else
         go_for_a_walk     
     end
@@ -40,11 +41,6 @@ def choose_direction
     end
 end
 
-#Attempt to catch or ignore
-#Feed, Compliment, Taunt, Throw pokeball
-#Caught pokemon
-    #Add to party
-    #Name pokemon
 
 def attempt_catch(pokemon)
     prompt = TTY::Prompt.new
@@ -58,7 +54,7 @@ def attempt_catch(pokemon)
             catch_actions(action, pokemon)
         end
     else
-        prompt.ok("The pokemon ran away to fight another day!")
+        print TTY::Box.frame "The pokemon ran away to fight another day!", align: :center, padding: 1
         choose_direction
     end
 end
@@ -78,21 +74,20 @@ def catch_actions(action, pokemon)
         attempt_catch(pokemon)
     elsif action == "Throw pokeball"
         pokeball_throw(pokemon)
-        
     end
 end
 
 def pokeball_throw(pokemon)
     prompt = TTY::Prompt.new
-    if $ready_to_be_caught >= 60
+    if $ready_to_be_caught >= 70
         new_instance = add_to_caught_pokemon(pokemon)
-        prompt.ok("#{pokemon.name.capitalize} was caught and added to your party! Congratulations!")
+        print TTY::Box.success("#{pokemon.name.capitalize} was caught and added to your party! Congratulations!")
         name = prompt.ask("What would you like to name your new pokemon?")
         new_instance.update(name: name)
-        prompt.ok("#{name} was added to your party!")
+        print TTY::Box.success("#{name} was added to your party!")
         post_catch_actions
     else
-        prompt.error("The pokemon escaped from the pokeball! Try again!")
+        print TTY::Box.error("The pokemon escaped from the pokeball! Try again!")
         attempt_catch(pokemon)  
     end
 end
