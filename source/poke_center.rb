@@ -3,6 +3,8 @@ prompt = TTY::Prompt.new
 
 ###Kyle - add pokemon image in this file
 def poke_center #view all pokemons
+    system "clear"
+    print TTY::Box.frame "Pokemon Center", align: :center
     prompt = TTY::Prompt.new
     pokemons = Pokemon.all.map {|pokemon| pokemon.name.capitalize}
     choice = prompt.enum_select("Pokedex", pokemons, per_page: 5)
@@ -13,5 +15,10 @@ def poke_center #view all pokemons
 
     print TTY::Box.frame "Type: #{actual_types.name}", "XP: #{poke.xp}", "Capture Rate: #{poke.capture_rate}", align: :center, padding: 1, title: {top_left: "#{poke.name.capitalize}"}
     choice = prompt.yes?("Would you like to view more pokemon?")
-    choice ? poke_center : explore
+    if choice 
+        poke_center
+    else
+        system "clear"
+        explore
+    end
 end

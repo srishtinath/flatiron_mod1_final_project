@@ -5,32 +5,43 @@ prompt = TTY::Prompt.new
 def catch_pokemon
     if CaughtPokemon.where(trainer:$trainer1).size == 10
         win_game
+        system "clear"
         starting_menu
     elsif CaughtPokemon.where(trainer: $trainer1, party: true).count >= 6
-        puts "Sorry, you can only catch more pokemon if you have less than 6 pokemon in your party. Please store some with Professor Oak first."
+        sleep(1)
+        print TTY::Box.error("Sorry, you can only catch more pokemon if you have less than 6 pokemon in your party. Please store some with Professor Oak first.")
+        sleep(3)
+        system "clear"
         starting_menu
     else
+        system "clear"
         go_for_a_walk     
     end
 end
 
-
 def go_for_a_walk
     prompt = TTY::Prompt.new
+    print TTY::Box.frame "Catch Pokemon", align: :center
+
     decide = prompt.select("What would you like to do?", ["Go for a walk", "View all my pokemon", "Go Back"])
     if decide == "Go for a walk"
+        system "clear"
         choose_direction
     elsif decide == "View all my pokemon"
+        system "clear"
         view_all_pokemon
     else
+        system "clear"
         starting_menu
     end
 end
 
 def choose_direction
     prompt = TTY::Prompt.new
+    print TTY::Box.frame "Go for a walk", align: :center
     selection = prompt.select("Which direction would you like to go?", ["North", "South", "East", "West", "Go Back"])
     if selection == "Go Back"
+        system "clear"
         go_for_a_walk
     else
         if rand(100) >= 50 
@@ -38,7 +49,9 @@ def choose_direction
             $ready_to_be_caught = (new_pokemon.capture_rate)/3 + 30
             attempt_catch(new_pokemon)
         else
-            puts "Sorry, there are no pokemon here. Maybe try another direction?"
+            prompt.error("Sorry, there are no pokemon here. Maybe try another direction?")
+            sleep(2)
+            system "clear"
             choose_direction
         end
     end
@@ -50,44 +63,60 @@ def attempt_catch(pokemon)
     attemptCatch = prompt.yes?("Would you like to attempt to catch the pokemon?")
     if attemptCatch
         #Feed, Compliment, Taunt, Throw pokeball
+        system "clear"
+        print TTY::Box.frame "Attempt Catch", align: :center
         action = prompt.select("What would you like to do?", ["Feed berries", "Compliment", "Taunt", "Throw pokeball", "Go Back"], active_color: :cyan) 
         if action == "Go Back"
+            system "clear"
             choose_direction
         else
+            system "clear"
             catch_actions(action, pokemon)
         end
     else
-        print TTY::Box.frame "The pokemon ran away to fight another day!", align: :center, padding: 1
+        print TTY::Box.error("The pokemon ran away to fight another day!")
+        sleep(2)
+        system "clear"
         choose_direction
     end
 end
 def catch_actions(action, pokemon)
     prompt = TTY::Prompt.new
+    print TTY::Box.frame "Attempt Catch", align: :center
+
     if action == "Compliment"
         $ready_to_be_caught += 10
-        prompt.ok("The pokemon is flattered!")
+        print TTY::Box.info("The pokemon is flattered!")
+        #prompt.ok("The pokemon is flattered!")
         attempt_catch(pokemon)
     elsif action == "Feed berries"
         $ready_to_be_caught += 20
-        prompt.ok("The pokemon loves berries!")
+        print TTY::Box.info("The pokemon loves berries!")
+        #prompt.ok("The pokemon loves berries!")
         attempt_catch(pokemon)
     elsif action == "Taunt"
         $ready_to_be_caught -= 5
-        prompt.error("The pokemon did not like that :(")
+        print TTY::Box.warn("The pokemon did not like that :(")
+        #prompt.error("The pokemon did not like that :(")
         attempt_catch(pokemon)
     elsif action == "Throw pokeball"
+        system "clear"
         pokeball_throw(pokemon)
     end
 end
 
 def pokeball_throw(pokemon)
     prompt = TTY::Prompt.new
+    print TTY::Box.frame "Attempt Catch", align: :center
+
     if $ready_to_be_caught >= 70
         new_instance = add_to_caught_pokemon(pokemon)
         print TTY::Box.success("#{pokemon.name.capitalize} was caught and added to your party! Congratulations!")
         name = prompt.ask("What would you like to name your new pokemon?", required:true)
         new_instance.update(poke_name: name)
         print TTY::Box.success("#{name} was added to your party!")
+        sleep(2)
+        system "clear"
         post_catch_actions
     else
         print TTY::Box.error("The pokemon escaped from the pokeball! Try again!")
@@ -103,6 +132,8 @@ end
 
 def post_catch_actions
     prompt = TTY::Prompt.new
+    print TTY::Box.frame "Go for a walk", align: :center
+
     if CaughtPokemon.where(trainer:$trainer1).size == 10
         win_game
         starting_menu
@@ -110,9 +141,11 @@ def post_catch_actions
         action = prompt.select("What would you like to do?", ["Catch more pokemon", "View my pokemon", "Go Back", "Exit Game"])
         if action == "Catch more pokemon"
             if CaughtPokemon.where(trainer: $trainer1, party: true).count >= 6
-                puts "Your party is full! Please put some in storage with Professor Oak before catching more pokemon!"
+                print TTY::Box.error("Your party is full! Please put some in storage with Professor Oak before catching more pokemon!")
+                system "clear"
                 starting_menu
-            else 
+            else
+                system "clear" 
                 choose_direction
             end
         elsif action == "View my pokemon"

@@ -8,8 +8,11 @@ def trainer_creation
     name = prompt.ask('What is your name?', required: true)
     age = prompt.ask('How old are you?', required: true)
     hometown = prompt.ask('Where are you from?', required: true)
+    sleep(0.5)
     print TTY::Box.success("Trainer succesfully created. Enjoy the game, #{name}!!!", padding: 1, align: :center)
     $trainer1 = Trainer.create(name: name, age: age, hometown: hometown)
+    sleep(1)
+    system "clear"
 end
 
 def choose_starter

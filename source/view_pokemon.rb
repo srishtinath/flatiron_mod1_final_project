@@ -12,6 +12,7 @@ end
 
 def view_all_pokemon
     prompt = TTY::Prompt.new
+    print TTY::Box.frame "My Pokemon", align: :center
     action = prompt.select("What would you like to view?", ["View all pokemon", "View party pokemon", "View pokemon in storage", "Go Back"])
     if action == "View all pokemon"
         $trainer1.view_pokemon
@@ -23,6 +24,7 @@ def view_all_pokemon
         $trainer1.view_storage_pokemon
         view_all_pokemon
     else
-        starting_menu
+        system "clear"
+        catch_pokemon
     end
 end

@@ -2,7 +2,6 @@
 require_relative 'config/environment.rb'
 
 
-
 def play_game
     prompt = TTY::Prompt.new
     font = TTY::Font.new(:doom)
@@ -23,6 +22,7 @@ def begin_game
         sleep(3)
         choose_starter
     when "Continue your game!"
+        system "clear"
         find_my_trainer
     else
         abort("Game Exited")
