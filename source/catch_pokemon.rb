@@ -61,6 +61,7 @@ end
 def attempt_catch(pokemon)
     prompt = TTY::Prompt.new
     display_trainer_and_pokemon(pokemon)
+    print TTY::Box.frame "A wild #{pokemon.name} appeared!", align: :center
     attemptCatch = prompt.yes?("Would you like to attempt to catch the pokemon?")
     if attemptCatch
         #Feed, Compliment, Taunt, Throw pokeball
