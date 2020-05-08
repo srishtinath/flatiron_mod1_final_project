@@ -20,7 +20,7 @@ def choose_starter
     system "clear"
     display_starters
     sleep(1)
-    system "clear"
+
     print TTY::Box.frame "Please select your starter pokemon!", padding: 1, align: :center
     starter = prompt.select("", %w(Bulbasaur Charmander Squirtle Pikachu))
     starter_instance = Pokemon.find_by(name: starter.downcase)

@@ -45,9 +45,8 @@ def display_one(pokemon)
 
 end
 
-def display_trainer_and_pokemon(trainer,pokemon)
-    left = Magick::ImageList.new(
-        download_image(trainer,false))
+def display_trainer_and_pokemon(pokemon)
+    left = Magick::ImageList.new('assets/trainerBack.png')
         .resize_to_fit(40,40)
         .crop(0,-10,100,100)
     right = Magick::ImageList.new(

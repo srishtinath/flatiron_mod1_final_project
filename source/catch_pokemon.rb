@@ -60,10 +60,12 @@ end
 
 def attempt_catch(pokemon)
     prompt = TTY::Prompt.new
+    display_trainer_and_pokemon(pokemon)
     attemptCatch = prompt.yes?("Would you like to attempt to catch the pokemon?")
     if attemptCatch
         #Feed, Compliment, Taunt, Throw pokeball
         system "clear"
+        display_trainer_and_pokemon(pokemon)
         print TTY::Box.frame "Attempt Catch", align: :center
         action = prompt.select("What would you like to do?", ["Feed berries", "Compliment", "Taunt", "Throw pokeball", "Go Back"], active_color: :cyan) 
         if action == "Go Back"
@@ -82,23 +84,33 @@ def attempt_catch(pokemon)
 end
 def catch_actions(action, pokemon)
     prompt = TTY::Prompt.new
+    display_trainer_and_pokemon(pokemon)
+
     print TTY::Box.frame "Attempt Catch", align: :center
 
     if action == "Compliment"
         $ready_to_be_caught += 10
         print TTY::Box.info("The pokemon is flattered!")
         #prompt.ok("The pokemon is flattered!")
+        sleep(2)
+        system "clear"
         attempt_catch(pokemon)
     elsif action == "Feed berries"
         $ready_to_be_caught += 20
         print TTY::Box.info("The pokemon loves berries!")
         #prompt.ok("The pokemon loves berries!")
+        sleep(2)
+        system "clear"
         attempt_catch(pokemon)
+
     elsif action == "Taunt"
         $ready_to_be_caught -= 5
         print TTY::Box.warn("The pokemon did not like that :(")
         #prompt.error("The pokemon did not like that :(")
+        sleep(2)
+        system "clear"
         attempt_catch(pokemon)
+
     elsif action == "Throw pokeball"
         system "clear"
         pokeball_throw(pokemon)
@@ -107,9 +119,11 @@ end
 
 def pokeball_throw(pokemon)
     prompt = TTY::Prompt.new
+
     print TTY::Box.frame "Attempt Catch", align: :center
 
     if $ready_to_be_caught >= 70
+        display_one(pokemon)
         new_instance = add_to_caught_pokemon(pokemon)
         print TTY::Box.success("#{pokemon.name.capitalize} was caught and added to your party! Congratulations!")
         name = prompt.ask("What would you like to name your new pokemon?", required:true)
