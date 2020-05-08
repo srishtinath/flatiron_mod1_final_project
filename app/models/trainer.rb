@@ -2,13 +2,6 @@ require_relative './../../source/pictures.rb'
 class Trainer < ActiveRecord::Base
     has_many :caught_pokemons
     has_many :pokemons, through: :caught_pokemons
-    
-    attr_accessor :back_img_url
-    def initialize(args)
-        super
-        self.update(back_img_url: 'https://i.imgur.com/YzPr8WH.png')
-        
-    end
 
     #View all pokemon belonging to trainer
     def view_pokemon
