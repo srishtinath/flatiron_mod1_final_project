@@ -133,7 +133,10 @@ def pokeball_throw(pokemon)
         system "clear"
         post_catch_actions
     else
+        display_trainer_and_pokemon(pokemon)
         print TTY::Box.error("The pokemon escaped from the pokeball! Try again!")
+        sleep(2)
+        system "clear"
         attempt_catch(pokemon)  
     end
 end

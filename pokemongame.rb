@@ -8,7 +8,7 @@ def play_game
     pastel = Pastel.new
     system "clear"
     print_pic("assets/poketerm_logo.png")
-    puts pastel.red.bold.italic(font.write("Welcome  to  Safari  Zone!", letter_spacing: 2))
+    puts pastel.red.bold.italic(font.write("Welcome  to  Safari  Zone  !", letter_spacing: 2))
     prompt.keypress("Press enter to continue", keys: [:return])
     begin_game
 end
